@@ -1,0 +1,8 @@
+{
+  "name": "cookBook",
+  "app_id": "52d26414",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
