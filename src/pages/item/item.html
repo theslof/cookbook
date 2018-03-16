@@ -1,0 +1,36 @@
+<!--
+  Generated template for the ItemPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title *ngIf="selectedItem;else defaultTitle">{{selectedItem.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content *ngIf="selectedItem;else noparam" padding>
+  <h2>{{selectedItem.name}}</h2>
+  <h3>Ingredients</h3>
+  <ion-list>
+    <ion-item-sliding *ngFor="let ingredient of selectedItem.ingredients">
+      <ion-item>{{ingredient.quantity}} {{ingredient.name}}</ion-item>
+      <ion-item-options side="right">
+        <button ion-button (click)="deleteIngredient(ingredient)" color="danger"><ion-icon name="trash"></ion-icon>Delete</button>
+        <button ion-button (click)="editIngredient(ingredient)"><ion-icon name="build"></ion-icon>Edit</button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <button ion-button color="light" (click)="addIngredient()">Add new ingredient</button>
+  </ion-list>
+  <h3>Directions</h3>
+  <div *ngFor="let step of selectedItem.steps">
+    {{step}}
+  </div>
+</ion-content>
+
+<ng-template #defaultTitle>Unknown Item</ng-template>
+<ng-template #noparam>You didn't supply an item to display!</ng-template>
