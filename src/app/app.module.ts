@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {ItemPage} from "../pages/item/item";
 import { RecipesProvider } from '../providers/recipes/recipes';
+import {IonicStorageModule} from "@ionic/storage";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { RecipesProvider } from '../providers/recipes/recipes';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -33,7 +35,7 @@ import { RecipesProvider } from '../providers/recipes/recipes';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    RecipesProvider
+    RecipesProvider,
   ]
 })
 export class AppModule {}

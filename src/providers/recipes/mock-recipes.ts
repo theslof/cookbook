@@ -1,6 +1,10 @@
-export const RECIPES = [
+import {Recipe} from "./recipes";
+
+export const RECIPES:Recipe[] = [
   {
+    index: 0,
     name: "Pock-marked old woman's tofu",
+    removed: false,
     ingredients: [
       {
         quantity: "500g",
@@ -72,7 +76,9 @@ export const RECIPES = [
     imageUrl: ""
   },
   {
+    index: 1,
     name: "Ants climbing a tree",
+    removed: false,
     ingredients: [
       {
         quantity: "120g",
@@ -129,7 +135,7 @@ export const RECIPES = [
     ],
     imageUrl: ""
   },
-  {
+/*  {
     name: "",
     ingredients: [
       {
@@ -144,5 +150,5 @@ export const RECIPES = [
       0
     ],
     imageUrl: ""
-  }
+  }*/
 ];

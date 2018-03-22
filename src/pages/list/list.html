@@ -9,8 +9,26 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      {{item.name}}
-    </button>
+    <ion-item-sliding *ngFor="let item of recipes">
+      <ion-item (click)="itemTapped($event, item)">{{item.name}}</ion-item>
+      <ion-item-options side="right">
+        <button ion-button (click)="deleteRecipe(item)" color="danger">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+        <button ion-button (click)="editRecipe(item)">
+          <ion-icon name="build"></ion-icon>
+          Edit
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-fab bottom left>
+      <button ion-fab (click)="init()">Init data</button>
+    </ion-fab>
   </ion-list>
+  <ion-fab bottom right>
+    <button ion-fab (click)="addRecipe()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

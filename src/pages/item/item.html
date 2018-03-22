@@ -24,12 +24,25 @@
         <button ion-button (click)="editIngredient(ingredient)"><ion-icon name="build"></ion-icon>Edit</button>
       </ion-item-options>
     </ion-item-sliding>
-    <button ion-button color="light" (click)="addIngredient()">Add new ingredient</button>
   </ion-list>
+  <button ion-button color="light" (click)="addIngredient()">Add new ingredient</button>
+
   <h3>Directions</h3>
-  <div *ngFor="let step of selectedItem.steps">
-    {{step}}
-  </div>
+  <ion-list>
+  <ion-item-sliding *ngFor="let step of selectedItem.steps; let i=index" [class.timedStep]="selectedItem.timers[i] > 0" >
+    <ion-item text-wrap>
+      {{step}}
+    </ion-item>
+    <ion-item-options side="right">
+      <button ion-button (click)="deleteStep(i)" color="danger"><ion-icon name="trash"></ion-icon>Delete</button>
+      <button ion-button (click)="editStep(i)"><ion-icon name="build"></ion-icon>Edit</button>
+    </ion-item-options>
+    <ion-item-options side="left" *ngIf="selectedItem.timers[i] > 0">
+      <button ion-button (click)="setTimer(i)"><ion-icon name="timer"></ion-icon>{{selectedItem.timers[i]}}m</button>
+    </ion-item-options>
+  </ion-item-sliding>
+  </ion-list>
+  <button ion-button color="light" (click)="addStep()">Add step</button>
 </ion-content>
 
 <ng-template #defaultTitle>Unknown Item</ng-template>
