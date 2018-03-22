@@ -1,23 +1,17 @@
-<!--
-  Generated template for the ItemPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title *ngIf="selectedItem;else defaultTitle">{{selectedItem.name}}</ion-title>
+    <ion-title *ngIf="selectedRecipe;else defaultTitle">{{selectedRecipe.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content *ngIf="selectedItem;else noparam" padding>
-  <h2>{{selectedItem.name}}</h2>
+<ion-content *ngIf="selectedRecipe;else noparam" padding>
+  <h2>{{selectedRecipe.name}}</h2>
   <h3>Ingredients</h3>
   <ion-list>
-    <ion-item-sliding *ngFor="let ingredient of selectedItem.ingredients">
+    <ion-item-sliding *ngFor="let ingredient of selectedRecipe.ingredients">
       <ion-item>{{ingredient.quantity}} {{ingredient.name}}</ion-item>
       <ion-item-options side="right">
         <button ion-button (click)="deleteIngredient(ingredient)" color="danger"><ion-icon name="trash"></ion-icon>Delete</button>
@@ -29,7 +23,7 @@
 
   <h3>Directions</h3>
   <ion-list>
-  <ion-item-sliding *ngFor="let step of selectedItem.steps; let i=index" [class.timedStep]="selectedItem.timers[i] > 0" >
+  <ion-item-sliding *ngFor="let step of selectedRecipe.steps; let i=index" [class.timedStep]="selectedRecipe.timers[i] > 0" >
     <ion-item text-wrap>
       {{step}}
     </ion-item>
@@ -37,12 +31,16 @@
       <button ion-button (click)="deleteStep(i)" color="danger"><ion-icon name="trash"></ion-icon>Delete</button>
       <button ion-button (click)="editStep(i)"><ion-icon name="build"></ion-icon>Edit</button>
     </ion-item-options>
-    <ion-item-options side="left" *ngIf="selectedItem.timers[i] > 0">
-      <button ion-button (click)="setTimer(i)"><ion-icon name="timer"></ion-icon>{{selectedItem.timers[i]}}m</button>
+    <ion-item-options side="left" *ngIf="selectedRecipe.timers[i] > 0">
+      <button ion-button (click)="setTimer(i)" [color]="(this.timer.id == i) && (this.timer.current > 0) ? 'secondary' : 'primary'">
+        <ion-icon name="timer"></ion-icon>{{selectedRecipe.timers[i]}}m</button>
     </ion-item-options>
   </ion-item-sliding>
   </ion-list>
   <button ion-button color="light" (click)="addStep()">Add step</button>
+  <ion-fab bottom right *ngIf="timer.current > 0">
+    <button ion-fab (click)="cancelTimer()" [color]="timer.current < 60 ? 'danger' : 'secondary'">{{timer.asText}}</button>
+  </ion-fab>
 </ion-content>
 
 <ng-template #defaultTitle>Unknown Item</ng-template>

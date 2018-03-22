@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Recipe, RecipesProvider} from "../../providers/recipes/recipes";
+import {Vibration} from "@ionic-native/vibration";
+import {NativeAudio} from "@ionic-native/native-audio";
 
 @IonicPage()
 @Component({
@@ -8,16 +10,25 @@ import {Recipe, RecipesProvider} from "../../providers/recipes/recipes";
   templateUrl: 'item.html',
 })
 export class ItemPage {
-  selectedItem: Recipe;
+  selectedRecipe: Recipe;
+  timer = {
+    id: -1,
+    current: 0,
+    time: 0,
+    tid: 0,
+    asText: '0s',
+  };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public alertCtrl: AlertController, private recipesProvider: RecipesProvider) {
+              public alertCtrl: AlertController, private recipesProvider: RecipesProvider,
+              private vibration: Vibration, private audio: NativeAudio) {
     // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
+    this.selectedRecipe = navParams.get('item');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ItemPage');
+    this.audio.preloadSimple('notification', 'assets/sfx/definite.mp3');
   }
 
   editIngredient(ingredient: { quantity: string, name: string }) {
@@ -49,7 +60,7 @@ export class ItemPage {
             console.log('Saved clicked');
             ingredient.name = data.name;
             ingredient.quantity = data.quantity;
-            this.recipesProvider.saveRecipe(this.selectedItem);
+            this.recipesProvider.saveRecipe(this.selectedRecipe);
           }
         }
       ]
@@ -82,8 +93,8 @@ export class ItemPage {
           text: 'Add',
           handler: data => {
             console.log('Add clicked');
-            this.selectedItem.ingredients.push({quantity: data.quantity, name: data.name});
-            this.recipesProvider.saveRecipe(this.selectedItem);
+            this.selectedRecipe.ingredients.push({quantity: data.quantity, name: data.name});
+            this.recipesProvider.saveRecipe(this.selectedRecipe);
           }
         }
       ]
@@ -106,9 +117,9 @@ export class ItemPage {
           text: 'Yes',
           handler: data => {
             console.log('Yes clicked');
-            let index: number = this.selectedItem.ingredients.indexOf(ingredient);
-            this.selectedItem.ingredients.splice(index, 1);
-            this.recipesProvider.saveRecipe(this.selectedItem);
+            let index: number = this.selectedRecipe.ingredients.indexOf(ingredient);
+            this.selectedRecipe.ingredients.splice(index, 1);
+            this.recipesProvider.saveRecipe(this.selectedRecipe);
           }
         }
       ]
@@ -149,9 +160,9 @@ export class ItemPage {
               console.log('Error: Timer must be a number');
               return;
             }
-            this.selectedItem.timers.push(time);
-            this.selectedItem.steps.push(data.step);
-            this.recipesProvider.saveRecipe(this.selectedItem);
+            this.selectedRecipe.timers.push(time);
+            this.selectedRecipe.steps.push(data.step);
+            this.recipesProvider.saveRecipe(this.selectedRecipe);
           }
         }
       ]
@@ -168,12 +179,12 @@ export class ItemPage {
           name: 'timer',
           placeholder: 'Timer',
           type: 'number',
-          value: this.selectedItem.timers[index].toString()
+          value: this.selectedRecipe.timers[index].toString()
         },
         {
           name: 'step',
           placeholder: 'Directions',
-          value: this.selectedItem.steps[index]
+          value: this.selectedRecipe.steps[index]
         },
       ],
       buttons: [
@@ -192,9 +203,9 @@ export class ItemPage {
               console.log('Error: Timer must be a number');
               return;
             }
-            this.selectedItem.timers[index] = time;
-            this.selectedItem.steps[index] = data.step;
-            this.recipesProvider.saveRecipe(this.selectedItem);
+            this.selectedRecipe.timers[index] = time;
+            this.selectedRecipe.steps[index] = data.step;
+            this.recipesProvider.saveRecipe(this.selectedRecipe);
           }
         }
       ]
@@ -217,9 +228,9 @@ export class ItemPage {
           text: 'Yes',
           handler: data => {
             console.log('Yes clicked');
-            this.selectedItem.steps.splice(index, 1);
-            this.selectedItem.timers.splice(index, 1);
-            this.recipesProvider.saveRecipe(this.selectedItem);
+            this.selectedRecipe.steps.splice(index, 1);
+            this.selectedRecipe.timers.splice(index, 1);
+            this.recipesProvider.saveRecipe(this.selectedRecipe);
           }
         }
       ]
@@ -228,5 +239,36 @@ export class ItemPage {
   }
 
   setTimer(index: number) {
+    clearInterval(this.timer.tid);
+    this.timer.id = index;
+    this.timer.time = this.selectedRecipe.timers[index] * 60;
+    this.timer.current = this.timer.time;
+    this.timer.asText = this.timeToString(this.timer.current);
+    this.timer.tid = setInterval(x => {
+      this.timer.asText = this.timeToString(this.timer.current-1);
+      if (this.timer.current <= 0) {
+        this.audio.play('notification');
+        this.vibration.vibrate(1000);
+        clearInterval(this.timer.tid);
+      } else {
+        this.timer.current--;
+      }
+    }, 1000);
+  }
+
+  cancelTimer() {
+    clearInterval(this.timer.tid);
+    this.timer.current = 0;
+    this.timer.asText = this.timeToString(this.timer.current);
+  }
+
+  timeToString(seconds: number): string {
+    let hours = (seconds / 3600);
+    let minutes = ((seconds % 3600) / 60);
+    seconds %= 60;
+
+    let text = hours >= 1 ? Math.round(hours) + 'h ' : (minutes >= 1 ? Math.round(minutes) + 'm ' : (seconds + 's'));
+
+    return text;
   }
 }

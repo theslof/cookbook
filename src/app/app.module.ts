@@ -11,6 +11,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {ItemPage} from "../pages/item/item";
 import { RecipesProvider } from '../providers/recipes/recipes';
 import {IonicStorageModule} from "@ionic/storage";
+import {Vibration} from "@ionic-native/vibration";
+import {NativeAudio} from "@ionic-native/native-audio";
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import {IonicStorageModule} from "@ionic/storage";
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RecipesProvider,
+    Vibration,
+    NativeAudio,
   ]
 })
 export class AppModule {}
