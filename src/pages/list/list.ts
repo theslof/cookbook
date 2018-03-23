@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {AlertController, NavController, NavParams} from 'ionic-angular';
 import {ItemPage} from "../item/item";
 import {RecipesProvider, Recipe} from "../../providers/recipes/recipes";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'page-list',
@@ -13,13 +14,12 @@ export class ListPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private recipeProvider: RecipesProvider, private alertCtrl: AlertController) {
+    this.recipeProvider.getRecipes().subscribe((recipes: Recipe[]) => {
+      this.recipes = recipes;
+    });
   }
 
   ionViewWillEnter(){
-    this.recipeProvider.getRecipes()
-      .then((data:Recipe[]) => {
-      this.recipes = data;
-    })
   }
 
   itemTapped(event, item) {
@@ -35,7 +35,7 @@ export class ListPage {
   }
 
   editRecipe(item: Recipe){
-
+    console.log("Not yet implemented!");
   }
 
   addRecipe() {
@@ -61,12 +61,7 @@ export class ListPage {
             console.log('Add clicked');
             let recipe: Recipe = RecipesProvider.emptyRecipe();
             recipe.name = data.name;
-            recipe.index = this.recipes.length;
-            this.recipes.push(recipe);
-            this.recipeProvider.saveRecipes(this.recipes)
-              .then((data:Recipe[]) => {
-                this.recipes = data;
-              });
+            this.recipeProvider.saveRecipe(recipe);
           }
         }
       ]
@@ -75,9 +70,6 @@ export class ListPage {
   }
 
   init(){
-    this.recipeProvider.initData()
-      .then((data:Recipe[]) => {
-        this.recipes = data;
-      });
+    this.recipeProvider.initData();
   }
 }

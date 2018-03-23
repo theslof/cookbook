@@ -1,35 +1,54 @@
 import {Injectable} from '@angular/core';
 import {Storage} from "@ionic/storage";
 import {RECIPES} from "./mock-recipes";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class RecipesProvider {
   private static readonly STORAGE_KEY = 'cookbook';
+  private recipeObserver: any;
+  private recipes: Observable<Recipe[]>;
 
   constructor(private storage: Storage) {
+    this.recipes = Observable.create(observer => {
+      this.recipeObserver = observer;
+    });
+    this.storage.get(RecipesProvider.STORAGE_KEY).then((data: Recipe[]) => {
+      this.updateRecipes(data);
+    });
   }
 
-  getRecipes(): Promise<Recipe[]> {
-    return this.storage.get(RecipesProvider.STORAGE_KEY);
+  private updateRecipes(data: Recipe[]) {
+    this.recipeObserver.next(data.filter((element: Recipe, index: number, array: Recipe[]) => {
+      return !element.removed;
+    }));
   }
 
-  saveRecipes(recipes: Recipe[]): Promise<Recipe[]> {
+  getRecipes(): Observable<Recipe[]> {
+    return this.recipes;
+  }
+
+  private saveRecipes(recipes: Recipe[]): Promise<Recipe[]> {
     return this.storage.set(RecipesProvider.STORAGE_KEY, recipes);
   }
 
-  saveRecipe(recipe: Recipe): Promise<Recipe[]> {
-    return this.storage.get(RecipesProvider.STORAGE_KEY)
+  saveRecipe(recipe: Recipe): void {
+    this.storage.get(RecipesProvider.STORAGE_KEY)
       .then((recipes: Recipe[]) => {
         if (recipe.index >= 0) {
           recipes[recipe.index] = recipe;
-          return this.storage.set(RecipesProvider.STORAGE_KEY, recipes);
         } else {
-          return recipes;
+          recipe.index = recipes.length;
+          recipes.push(recipe);
         }
+        return this.saveRecipes(recipes);
+      })
+      .then((recipes: Recipe[]) => {
+        this.updateRecipes(recipes);
       });
   }
 
-  static emptyRecipe(): Recipe{
+  static emptyRecipe(): Recipe {
     return {
       index: -1,
       name: "",
@@ -41,8 +60,11 @@ export class RecipesProvider {
     }
   }
 
-  initData(): Promise<Recipe[]> {
-    return this.storage.set(RecipesProvider.STORAGE_KEY, RECIPES);
+  initData(): void {
+    this.storage.set(RecipesProvider.STORAGE_KEY, RECIPES)
+      .then((recipes: Recipe[]) => {
+        this.updateRecipes(recipes);
+      });
   }
 }
 

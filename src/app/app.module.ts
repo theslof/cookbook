@@ -13,6 +13,7 @@ import { RecipesProvider } from '../providers/recipes/recipes';
 import {IonicStorageModule} from "@ionic/storage";
 import {Vibration} from "@ionic-native/vibration";
 import {NativeAudio} from "@ionic-native/native-audio";
+import { TimerProvider } from '../providers/timer/timer';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,8 @@ import {NativeAudio} from "@ionic-native/native-audio";
     RecipesProvider,
     Vibration,
     NativeAudio,
+    TimerProvider,
+    TimerProvider,
   ]
 })
 export class AppModule {}

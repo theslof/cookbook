@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
 import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Recipe, RecipesProvider} from "../../providers/recipes/recipes";
-import {Vibration} from "@ionic-native/vibration";
-import {NativeAudio} from "@ionic-native/native-audio";
+import {Timer, TimerProvider} from "../../providers/timer/timer";
 
 @IonicPage()
 @Component({
@@ -11,24 +10,27 @@ import {NativeAudio} from "@ionic-native/native-audio";
 })
 export class ItemPage {
   selectedRecipe: Recipe;
-  timer = {
-    id: -1,
-    current: 0,
+  timer: Timer = {
+    id: 0,
     time: 0,
-    tid: 0,
+    current: 0,
     asText: '0s',
+    recipeID: -1,
+    stepID: -1,
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public alertCtrl: AlertController, private recipesProvider: RecipesProvider,
-              private vibration: Vibration, private audio: NativeAudio) {
+              public timerProvider: TimerProvider) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedRecipe = navParams.get('item');
+    timerProvider.getTimer().subscribe((timer:Timer) => {
+      this.timer = timer;
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ItemPage');
-    this.audio.preloadSimple('notification', 'assets/sfx/definite.mp3');
   }
 
   editIngredient(ingredient: { quantity: string, name: string }) {
@@ -130,11 +132,11 @@ export class ItemPage {
   addStep() {
     let prompt = this.alertCtrl.create({
       title: 'Add step',
-      message: "Set a timer and directions:",
+      message: "Set a timer (minutes) and directions:",
       inputs: [
         {
           name: 'timer',
-          placeholder: 'Timer',
+          placeholder: 'Timer (minutes)',
           type: 'number',
           value: '0'
         },
@@ -173,11 +175,11 @@ export class ItemPage {
   editStep(index: number) {
     let prompt = this.alertCtrl.create({
       title: 'Edit step',
-      message: "Modify the timer and/or directions:",
+      message: "Modify the timer (minutes) and/or directions:",
       inputs: [
         {
           name: 'timer',
-          placeholder: 'Timer',
+          placeholder: 'Timer (minutes)',
           type: 'number',
           value: this.selectedRecipe.timers[index].toString()
         },
@@ -238,37 +240,7 @@ export class ItemPage {
     prompt.present();
   }
 
-  setTimer(index: number) {
-    clearInterval(this.timer.tid);
-    this.timer.id = index;
-    this.timer.time = this.selectedRecipe.timers[index] * 60;
-    this.timer.current = this.timer.time;
-    this.timer.asText = this.timeToString(this.timer.current);
-    this.timer.tid = setInterval(x => {
-      this.timer.asText = this.timeToString(this.timer.current-1);
-      if (this.timer.current <= 0) {
-        this.audio.play('notification');
-        this.vibration.vibrate(1000);
-        clearInterval(this.timer.tid);
-      } else {
-        this.timer.current--;
-      }
-    }, 1000);
-  }
-
-  cancelTimer() {
-    clearInterval(this.timer.tid);
-    this.timer.current = 0;
-    this.timer.asText = this.timeToString(this.timer.current);
-  }
-
-  timeToString(seconds: number): string {
-    let hours = (seconds / 3600);
-    let minutes = ((seconds % 3600) / 60);
-    seconds %= 60;
-
-    let text = hours >= 1 ? Math.round(hours) + 'h ' : (minutes >= 1 ? Math.round(minutes) + 'm ' : (seconds + 's'));
-
-    return text;
+  setTimer(index: number){
+    this.timerProvider.setTimer(this.selectedRecipe.index, index, this.selectedRecipe.timers[index] * 60)
   }
 }
