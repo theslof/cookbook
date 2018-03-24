@@ -12,7 +12,7 @@ export class TimerProvider {
     time: 0,
     current: 0,
     asText: '0s',
-    recipeID: -1,
+    uuid: '',
     stepID: -1,
   };
 
@@ -31,9 +31,9 @@ export class TimerProvider {
     return (this.timer.current > 0);
   }
 
-  setTimer(recipeID: number, stepID: number, seconds: number) {
+  setTimer(uuid: string, stepID: number, seconds: number) {
     clearInterval(this.timer.id);
-    this.timer.recipeID = recipeID;
+    this.timer.uuid = uuid;
     this.timer.stepID = stepID;
     this.timer.time = seconds;
     this.timer.current = this.timer.time;
@@ -71,6 +71,6 @@ export interface Timer {
   time: number;
   current: number;
   asText: string;
-  recipeID: number;
+  uuid: string;
   stepID: number;
 }

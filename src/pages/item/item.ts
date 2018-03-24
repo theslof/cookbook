@@ -9,13 +9,14 @@ import {Timer, TimerProvider} from "../../providers/timer/timer";
   templateUrl: 'item.html',
 })
 export class ItemPage {
+  uuid: string;
   selectedRecipe: Recipe;
   timer: Timer = {
     id: 0,
     time: 0,
     current: 0,
     asText: '0s',
-    recipeID: -1,
+    uuid: '',
     stepID: -1,
   };
 
@@ -23,7 +24,10 @@ export class ItemPage {
               public alertCtrl: AlertController, private recipesProvider: RecipesProvider,
               public timerProvider: TimerProvider) {
     // If we navigated to this page, we will have an item available as a nav param
-    this.selectedRecipe = navParams.get('item');
+    this.uuid = navParams.get('uuid');
+    this.recipesProvider.getRecipe(this.uuid).then((recipe: Recipe) => {
+      this.selectedRecipe = recipe;
+    });
     timerProvider.getTimer().subscribe((timer:Timer) => {
       this.timer = timer;
     });
@@ -62,7 +66,7 @@ export class ItemPage {
             console.log('Saved clicked');
             ingredient.name = data.name;
             ingredient.quantity = data.quantity;
-            this.recipesProvider.saveRecipe(this.selectedRecipe);
+            this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
           }
         }
       ]
@@ -96,7 +100,7 @@ export class ItemPage {
           handler: data => {
             console.log('Add clicked');
             this.selectedRecipe.ingredients.push({quantity: data.quantity, name: data.name});
-            this.recipesProvider.saveRecipe(this.selectedRecipe);
+            this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
           }
         }
       ]
@@ -121,7 +125,7 @@ export class ItemPage {
             console.log('Yes clicked');
             let index: number = this.selectedRecipe.ingredients.indexOf(ingredient);
             this.selectedRecipe.ingredients.splice(index, 1);
-            this.recipesProvider.saveRecipe(this.selectedRecipe);
+            this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
           }
         }
       ]
@@ -164,7 +168,7 @@ export class ItemPage {
             }
             this.selectedRecipe.timers.push(time);
             this.selectedRecipe.steps.push(data.step);
-            this.recipesProvider.saveRecipe(this.selectedRecipe);
+            this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
           }
         }
       ]
@@ -207,7 +211,7 @@ export class ItemPage {
             }
             this.selectedRecipe.timers[index] = time;
             this.selectedRecipe.steps[index] = data.step;
-            this.recipesProvider.saveRecipe(this.selectedRecipe);
+            this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
           }
         }
       ]
@@ -232,7 +236,7 @@ export class ItemPage {
             console.log('Yes clicked');
             this.selectedRecipe.steps.splice(index, 1);
             this.selectedRecipe.timers.splice(index, 1);
-            this.recipesProvider.saveRecipe(this.selectedRecipe);
+            this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
           }
         }
       ]
@@ -241,6 +245,6 @@ export class ItemPage {
   }
 
   setTimer(index: number){
-    this.timerProvider.setTimer(this.selectedRecipe.index, index, this.selectedRecipe.timers[index] * 60)
+    this.timerProvider.setTimer(this.uuid, index, this.selectedRecipe.timers[index] * 60)
   }
 }

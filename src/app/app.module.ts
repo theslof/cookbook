@@ -14,13 +14,16 @@ import {IonicStorageModule} from "@ionic/storage";
 import {Vibration} from "@ionic-native/vibration";
 import {NativeAudio} from "@ionic-native/native-audio";
 import { TimerProvider } from '../providers/timer/timer';
+import { PreferencesProvider } from '../providers/preferences/preferences';
+import {SettingsPage} from "../pages/settings/settings";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
-    ItemPage
+    ItemPage,
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,8 @@ import { TimerProvider } from '../providers/timer/timer';
     MyApp,
     HomePage,
     ListPage,
-    ItemPage
+    ItemPage,
+    SettingsPage,
   ],
   providers: [
     StatusBar,
@@ -42,7 +46,7 @@ import { TimerProvider } from '../providers/timer/timer';
     Vibration,
     NativeAudio,
     TimerProvider,
-    TimerProvider,
+    PreferencesProvider,
   ]
 })
 export class AppModule {}

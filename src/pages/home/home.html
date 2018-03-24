@@ -13,6 +13,34 @@
   <p>
     Cookbook in progress.
   </p>
+  <h2>Todo:</h2>
+  <ion-list>
+    <ion-item text-wrap>
+      <ion-icon item-start name="star"></ion-icon>
+      <h2>Favorites</h2>
+      <p>Sort out a list of favorite recipes and show these as a start page. Add/remove from list on each item page.</p>
+    </ion-item>
+    <ion-item text-wrap>
+      <ion-icon item-start name="build"></ion-icon>
+      <h2>Settings</h2>
+      <p>A new page that contains settings, for example notification sound, theme and initialize/nuke all saved data. Restore deleted recipes?</p>
+    </ion-item>
+    <ion-item text-wrap>
+      <ion-icon item-start name="color-palette"></ion-icon>
+      <h2>Theming</h2>
+      <p>At least two different themes to pick between and enabling the selected theme over the entire app.</p>
+    </ion-item>
+    <ion-item text-wrap>
+      <ion-icon item-start name="ionic"></ion-icon>
+      <h2>Logo/Splash</h2>
+      <p>SVG icon (cooking pot with paint brush?) and splash art.</p>
+    </ion-item>
+    <ion-item text-wrap style="background-color: #32db64">
+      <ion-icon item-start name="checkmark"></ion-icon>
+      <h2>UUID-based storage</h2>
+      <p>Split storage into two separate sections: One list of all recipes with a paired UUID, and all recipes saved under their corresponding UUID. Fetch index list to display all recipes and only fetch detailed data for specific UUID.</p>
+    </ion-item>
+  </ion-list>
 
   <button ion-button secondary menuToggle>Toggle Menu</button>
 </ion-content>

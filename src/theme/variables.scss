@@ -44,6 +44,10 @@ $colors: (
   padding-left: 2px;
 }
 
+.timedStepCurrent {
+  border-color: map-get($colors, secondary) !important;
+}
+
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here

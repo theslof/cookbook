@@ -14,8 +14,14 @@
     <ion-item-sliding *ngFor="let ingredient of selectedRecipe.ingredients">
       <ion-item>{{ingredient.quantity}} {{ingredient.name}}</ion-item>
       <ion-item-options side="right">
-        <button ion-button (click)="deleteIngredient(ingredient)" color="danger"><ion-icon name="trash"></ion-icon>Delete</button>
-        <button ion-button (click)="editIngredient(ingredient)"><ion-icon name="build"></ion-icon>Edit</button>
+        <button ion-button (click)="deleteIngredient(ingredient)" color="danger">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+        <button ion-button (click)="editIngredient(ingredient)">
+          <ion-icon name="build"></ion-icon>
+          Edit
+        </button>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
@@ -23,25 +29,38 @@
 
   <h3>Directions</h3>
   <ion-list>
-  <ion-item-sliding *ngFor="let step of selectedRecipe.steps; let i=index" [class.timedStep]="selectedRecipe.timers[i] > 0" >
-    <ion-item text-wrap>
-      {{step}}
-    </ion-item>
-    <ion-item-options side="right">
-      <button ion-button (click)="deleteStep(i)" color="danger"><ion-icon name="trash"></ion-icon>Delete</button>
-      <button ion-button (click)="editStep(i)"><ion-icon name="build"></ion-icon>Edit</button>
-    </ion-item-options>
-    <ion-item-options side="left" *ngIf="selectedRecipe.timers[i] > 0">
-      <button ion-button (click)="setTimer(i)"
-              [color]="(timer.recipeID == selectedRecipe.index) && (timer.stepID == i) && (timer.current > 0)
+    <ion-item-sliding *ngFor="let step of selectedRecipe.steps; let i=index"
+                      [class.timedStep]="selectedRecipe.timers[i] > 0"
+                      [class.timedStepCurrent]="(uuid == timer.uuid)
+                      && (timer.stepID == i) && (timer.current > 0)">
+      <ion-item text-wrap>
+        {{step}}
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button (click)="deleteStep(i)" color="danger">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+        <button ion-button (click)="editStep(i)">
+          <ion-icon name="build"></ion-icon>
+          Edit
+        </button>
+      </ion-item-options>
+      <ion-item-options side="left" *ngIf="selectedRecipe.timers[i] > 0">
+        <button ion-button (click)="setTimer(i)"
+                [color]="(timer.uuid == uuid) && (timer.stepID == i) && (timer.current > 0)
               ? 'secondary' : 'primary'">
-        <ion-icon name="timer"></ion-icon>{{selectedRecipe.timers[i]}}m</button>
-    </ion-item-options>
-  </ion-item-sliding>
+          <ion-icon name="timer"></ion-icon>
+          {{selectedRecipe.timers[i]}}m
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
   <button ion-button color="light" (click)="addStep()">Add step</button>
   <ion-fab bottom right *ngIf="timer.current > 0">
-    <button ion-fab (click)="timerProvider.cancelTimer()" [color]="timer.current < 60 ? 'danger' : 'secondary'">{{timer.asText}}</button>
+    <button ion-fab (click)="timerProvider.cancelTimer()" [color]="timer.current < 60 ? 'danger' : 'secondary'">
+      {{timer.asText}}
+    </button>
   </ion-fab>
 </ion-content>
 
