@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, NavParams} from 'ionic-angular';
 import {Recipe, RecipesProvider} from "../../providers/recipes/recipes";
 import {Timer, TimerProvider} from "../../providers/timer/timer";
 
@@ -20,9 +20,8 @@ export class ItemPage {
     stepID: -1,
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              public alertCtrl: AlertController, private recipesProvider: RecipesProvider,
-              public timerProvider: TimerProvider) {
+  constructor(public navParams: NavParams, public alertCtrl: AlertController,
+              private recipesProvider: RecipesProvider, public timerProvider: TimerProvider) {
     // If we navigated to this page, we will have an item available as a nav param
     this.uuid = navParams.get('uuid');
     this.recipesProvider.getRecipe(this.uuid).then((recipe: Recipe) => {
@@ -33,8 +32,38 @@ export class ItemPage {
     });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ItemPage');
+  addIngredient() {
+    let prompt = this.alertCtrl.create({
+      title: 'Add ingredient',
+      message: "Enter a quantity and name for the ingredient:",
+      inputs: [
+        {
+          name: 'quantity',
+          placeholder: 'Quantity',
+        },
+        {
+          name: 'name',
+          placeholder: 'Ingredient',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Add',
+          handler: data => {
+            console.log('Add clicked');
+            this.selectedRecipe.ingredients.push({quantity: data.quantity, name: data.name});
+            this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 
   editIngredient(ingredient: { quantity: string, name: string }) {
@@ -56,7 +85,7 @@ export class ItemPage {
       buttons: [
         {
           text: 'Cancel',
-          handler: data => {
+          handler: () => {
             console.log('Cancel clicked');
           }
         },
@@ -74,40 +103,6 @@ export class ItemPage {
     prompt.present();
   }
 
-  addIngredient() {
-    let prompt = this.alertCtrl.create({
-      title: 'Add ingredient',
-      message: "Enter a quantity and name for the ingredient:",
-      inputs: [
-        {
-          name: 'quantity',
-          placeholder: 'Quantity',
-        },
-        {
-          name: 'name',
-          placeholder: 'Ingredient',
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Add',
-          handler: data => {
-            console.log('Add clicked');
-            this.selectedRecipe.ingredients.push({quantity: data.quantity, name: data.name});
-            this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
-          }
-        }
-      ]
-    });
-    prompt.present();
-  }
-
   deleteIngredient(ingredient: { quantity: string, name: string }) {
     let prompt = this.alertCtrl.create({
       title: 'Remove ingredient',
@@ -115,13 +110,13 @@ export class ItemPage {
       buttons: [
         {
           text: 'No',
-          handler: data => {
+          handler: () => {
             console.log('No clicked');
           }
         },
         {
           text: 'Yes',
-          handler: data => {
+          handler: () => {
             console.log('Yes clicked');
             let index: number = this.selectedRecipe.ingredients.indexOf(ingredient);
             this.selectedRecipe.ingredients.splice(index, 1);
@@ -153,7 +148,7 @@ export class ItemPage {
       buttons: [
         {
           text: 'Cancel',
-          handler: data => {
+          handler: () => {
             console.log('Cancel clicked');
           }
         },
@@ -196,7 +191,7 @@ export class ItemPage {
       buttons: [
         {
           text: 'Cancel',
-          handler: data => {
+          handler: () => {
             console.log('Cancel clicked');
           }
         },
@@ -226,13 +221,13 @@ export class ItemPage {
       buttons: [
         {
           text: 'No',
-          handler: data => {
+          handler: () => {
             console.log('No clicked');
           }
         },
         {
           text: 'Yes',
-          handler: data => {
+          handler: () => {
             console.log('Yes clicked');
             this.selectedRecipe.steps.splice(index, 1);
             this.selectedRecipe.timers.splice(index, 1);

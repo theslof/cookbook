@@ -41,11 +41,11 @@ export class RecipesProvider {
 
   saveRecipe(uuid: string, recipe: Recipe): void {
     this.storage.set(uuid, recipe)
-      .then(value => {
+      .then(() => {
         this.index[uuid] = recipe.name;
         return this.saveRecipeIndex(this.index);
       })
-      .then(value => {
+      .then(() => {
         this.updateRecipes(this.index);
       });
   }
@@ -65,11 +65,11 @@ export class RecipesProvider {
 
   deleteRecipe(uuid: string) {
     this.storage.remove(uuid)
-      .then(value => {
+      .then(() => {
         delete this.index[uuid];
         return this.saveRecipeIndex(this.index);
       })
-      .then(value => {
+      .then(() => {
         this.updateRecipes(this.index);
       })
   }
@@ -86,7 +86,7 @@ export class RecipesProvider {
 
   initData(): void {
     this.storage.clear()
-      .then(value => {
+      .then(() => {
         this.index = {};
         RECIPES.forEach((value: Recipe) => {
           let uuid: string = UUID.UUID();
@@ -98,7 +98,6 @@ export class RecipesProvider {
       .then((recipes: RecipeIndex) => {
         this.updateRecipes(recipes);
       });
-    ;
   }
 }
 

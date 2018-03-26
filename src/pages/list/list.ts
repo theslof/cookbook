@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, NavController} from 'ionic-angular';
 import {ItemPage} from "../item/item";
 import {RecipesProvider, Recipe, RecipeIndex} from "../../providers/recipes/recipes";
 import {UUID} from "angular2-uuid";
@@ -12,19 +12,15 @@ export class ListPage {
   recipes: RecipeIndex = {};
   index: string[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              private recipeProvider: RecipesProvider, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private recipeProvider: RecipesProvider,
+              private alertCtrl: AlertController) {
     this.recipeProvider.getRecipes().subscribe((recipes: RecipeIndex) => {
       this.recipes = recipes;
       this.index = Object.keys(recipes);
     });
   }
 
-  ionViewDidEnter(){
-  }
-
   itemTapped(event, uuid) {
-    // That's right, we're pushing to ourselves!
     this.navCtrl.push(ItemPage, {
       uuid: uuid
     });
@@ -48,7 +44,7 @@ export class ListPage {
       buttons: [
         {
           text: 'Cancel',
-          handler: data => {
+          handler: () => {
             console.log('Cancel clicked');
           }
         },
@@ -76,7 +72,7 @@ export class ListPage {
       buttons: [
         {
           text: 'Cancel',
-          handler: data => {
+          handler: () => {
             console.log('Cancel clicked');
           }
         },
