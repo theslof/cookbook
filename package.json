@@ -1,7 +1,7 @@
 {
-  "name": "cookBook",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
+  "name": "Cookbook",
+  "version": "0.9.0",
+  "author": "Jonas Theslöf",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
