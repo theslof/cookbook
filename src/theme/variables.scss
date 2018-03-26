@@ -35,8 +35,12 @@ $colors: (
   secondaryDark: #681576,
   danger: #f53d3d,
   light: #f4f4f4,
-  dark: #222
+  dark: #222,
 );
+
+button.favorite {
+  font-size: 2em;
+}
 
 .default {
   .timedStep {
@@ -50,7 +54,7 @@ $colors: (
 }
 
 .dark {
-  ion-content, ion-menu, ion-header{
+  ion-content, ion-menu, ion-header {
     background-color: map-get($colors, dark);
     color: map-get($colors, light);
   }

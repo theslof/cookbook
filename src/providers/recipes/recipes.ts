@@ -8,18 +8,30 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 @Injectable()
 export class RecipesProvider {
   private static readonly STORAGE_INDEX = 'index';
+  private static readonly STORAGE_FAVORITES = 'favorites';
   private recipe: BehaviorSubject<RecipeIndex>;
+  private favoritesSubject: BehaviorSubject<RecipeIndex>;
+  private favorites: RecipeIndex;
   private index: RecipeIndex;
 
   constructor(private storage: Storage) {
     this.recipe = new BehaviorSubject<RecipeIndex>({});
+    this.favoritesSubject = new BehaviorSubject<RecipeIndex>({});
 
     this.recipe.subscribe((value: RecipeIndex) => {
       this.index = value;
     });
 
+    this.favoritesSubject.subscribe((value: RecipeIndex) => {
+      this.favorites = value;
+    });
+
     this.storage.get(RecipesProvider.STORAGE_INDEX).then((data: RecipeIndex) => {
       this.updateRecipes(data == null ? {} : data);
+    });
+
+    this.storage.get(RecipesProvider.STORAGE_FAVORITES).then((favorites: RecipeIndex) => {
+      this.favoritesSubject.next(favorites == null ? {} : favorites);
     });
   }
 
@@ -31,8 +43,32 @@ export class RecipesProvider {
     return this.recipe;
   }
 
+  getFavorites(): Observable<RecipeIndex> {
+    return this.favoritesSubject;
+  }
+
   getRecipe(uuid: string): Promise<Recipe> {
     return this.storage.get(uuid);
+  }
+
+  addFavorite(uuid: string) {
+    if (this.index[uuid] != null) {
+      this.favorites[uuid] = this.index[uuid];
+      this.storage.set(RecipesProvider.STORAGE_FAVORITES, this.favorites);
+      this.favoritesSubject.next(this.favorites);
+    }
+  }
+
+  removeFavorite(uuid: string) {
+    if (this.favorites[uuid] != null) {
+      delete this.favorites[uuid];
+      this.storage.set(RecipesProvider.STORAGE_FAVORITES, this.favorites);
+      this.favoritesSubject.next(this.favorites);
+    }
+  }
+
+  isFavorite(uuid: string): boolean {
+    return this.favorites[uuid] != null;
   }
 
   private saveRecipeIndex(recipes: RecipeIndex): Promise<RecipeIndex> {

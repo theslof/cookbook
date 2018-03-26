@@ -8,11 +8,19 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Welcome!</h3>
+  <h3>Favorite recipes</h3>
 
-  <p>
-    Cookbook in progress.
-  </p>
+  <ion-list>
+    <ion-item-sliding *ngFor="let uuid of index">
+      <ion-item (click)="itemTapped($event, uuid)">{{recipes[uuid]}}</ion-item>
+      <ion-item-options side="right">
+        <button ion-button (click)="removeFavorite(uuid)" color="danger">
+          <ion-icon name="trash"></ion-icon>
+          Remove
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 
   <button ion-button secondary menuToggle>Toggle Menu</button>
 </ion-content>

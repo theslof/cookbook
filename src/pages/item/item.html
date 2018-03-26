@@ -1,7 +1,17 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title *ngIf="selectedRecipe;else defaultTitle">{{selectedRecipe.name}}</ion-title>
+    <ion-title *ngIf="selectedRecipe;else defaultTitle">
+      {{selectedRecipe.name}}
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button clear *ngIf="favorite" (click)="removeFavorite()" class="favorite">
+        <ion-icon name="star"></ion-icon>
+      </button>
+      <button ion-button clear *ngIf="!favorite" (click)="addFavorite()" class="favorite">
+        <ion-icon name="star-outline"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>

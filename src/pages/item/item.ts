@@ -11,6 +11,7 @@ import {Timer, TimerProvider} from "../../providers/timer/timer";
 export class ItemPage {
   uuid: string;
   selectedRecipe: Recipe;
+  favorite: boolean;
   timer: Timer = {
     id: 0,
     time: 0,
@@ -24,6 +25,7 @@ export class ItemPage {
               private recipesProvider: RecipesProvider, public timerProvider: TimerProvider) {
     // If we navigated to this page, we will have an item available as a nav param
     this.uuid = navParams.get('uuid');
+    this.favorite = this.recipesProvider.isFavorite(this.uuid);
     this.recipesProvider.getRecipe(this.uuid).then((recipe: Recipe) => {
       this.selectedRecipe = recipe;
     });
@@ -241,5 +243,15 @@ export class ItemPage {
 
   setTimer(index: number){
     this.timerProvider.setTimer(this.uuid, index, this.selectedRecipe.timers[index] * 60)
+  }
+
+  addFavorite(){
+    this.recipesProvider.addFavorite(this.uuid);
+    this.favorite = true;
+  }
+
+  removeFavorite(){
+    this.recipesProvider.removeFavorite(this.uuid);
+    this.favorite = false;
   }
 }
