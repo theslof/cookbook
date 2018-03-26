@@ -21,8 +21,6 @@ export class ListPage {
   }
 
   ionViewDidEnter(){
-    this.recipes = this.recipeProvider.getIndex();
-    this.index = Object.keys(this.recipes);
   }
 
   itemTapped(event, uuid) {

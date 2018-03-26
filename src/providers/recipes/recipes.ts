@@ -3,34 +3,32 @@ import {Storage} from "@ionic/storage";
 import {RECIPES} from "./mock-recipes";
 import {Observable} from "rxjs/Observable";
 import {UUID} from "angular2-uuid";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class RecipesProvider {
   private static readonly STORAGE_INDEX = 'index';
-  private recipeObserver: any;
-  private recipeObservable: Observable<RecipeIndex>;
-  private index: RecipeIndex = {};
+  private recipe: BehaviorSubject<RecipeIndex>;
+  private index: RecipeIndex;
 
   constructor(private storage: Storage) {
-    this.recipeObservable = Observable.create(observer => {
-      this.recipeObserver = observer;
+    this.recipe = new BehaviorSubject<RecipeIndex>({});
+
+    this.recipe.subscribe((value: RecipeIndex) => {
+      this.index = value;
     });
+
     this.storage.get(RecipesProvider.STORAGE_INDEX).then((data: RecipeIndex) => {
-      this.index = data == null ? {} : data;
-      this.updateRecipes(data);
+      this.updateRecipes(data == null ? {} : data);
     });
   }
 
   private updateRecipes(data: RecipeIndex) {
-    this.recipeObserver.next(data);
+    this.recipe.next(data);
   }
 
   getRecipes(): Observable<RecipeIndex> {
-    return this.recipeObservable;
-  }
-
-  getIndex(): RecipeIndex {
-    return this.index;
+    return this.recipe;
   }
 
   getRecipe(uuid: string): Promise<Recipe> {
@@ -66,10 +64,14 @@ export class RecipesProvider {
   }
 
   deleteRecipe(uuid: string) {
-    this.storage.remove(uuid).then(value => {
-      delete this.index[uuid];
-      this.updateRecipes(this.index);
-    })
+    this.storage.remove(uuid)
+      .then(value => {
+        delete this.index[uuid];
+        return this.saveRecipeIndex(this.index);
+      })
+      .then(value => {
+        this.updateRecipes(this.index);
+      })
   }
 
   static emptyRecipe(): Recipe {
