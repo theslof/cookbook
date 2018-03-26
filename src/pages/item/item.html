@@ -8,8 +8,7 @@
 
 
 <ion-content *ngIf="selectedRecipe;else noparam" padding>
-  <h2>{{selectedRecipe.name}}</h2>
-  <h3>Ingredients</h3>
+  <h2>Ingredients</h2>
   <ion-list>
     <ion-item-sliding *ngFor="let ingredient of selectedRecipe.ingredients">
       <ion-item>{{ingredient.quantity}} {{ingredient.name}}</ion-item>
@@ -27,7 +26,7 @@
   </ion-list>
   <button ion-button color="light" (click)="addIngredient()">Add new ingredient</button>
 
-  <h3>Directions</h3>
+  <h2>Directions</h2>
   <ion-list>
     <ion-item-sliding *ngFor="let step of selectedRecipe.steps; let i=index"
                       [class.timedStep]="selectedRecipe.timers[i] > 0"

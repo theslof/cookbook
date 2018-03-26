@@ -85,7 +85,7 @@ export class RecipesProvider {
   }
 
   initData(): void {
-    this.storage.clear()
+    this.clearData()
       .then(() => {
         this.index = {};
         RECIPES.forEach((value: Recipe) => {
@@ -98,6 +98,10 @@ export class RecipesProvider {
       .then((recipes: RecipeIndex) => {
         this.updateRecipes(recipes);
       });
+  }
+
+  clearData(): Promise<any> {
+    return this.storage.clear();
   }
 }
 

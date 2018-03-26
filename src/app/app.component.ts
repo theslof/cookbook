@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import {SettingsPage} from "../pages/settings/settings";
+import {PreferencesProvider} from "../providers/preferences/preferences";
 
 @Component({
   templateUrl: 'app.html'
@@ -17,7 +18,10 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  selectedTheme: string;
+
+  constructor(public platform: Platform, public statusBar: StatusBar,
+              public splashScreen: SplashScreen, private prefs: PreferencesProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -27,6 +31,7 @@ export class MyApp {
       { title: 'Settings', component: SettingsPage}
     ];
 
+    this.prefs.getTheme().subscribe(theme => this.selectedTheme = theme);
   }
 
   initializeApp() {

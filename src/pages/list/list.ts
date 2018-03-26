@@ -89,8 +89,4 @@ export class ListPage {
     });
     prompt.present();
   }
-
-  init(){
-    this.recipeProvider.initData();
-  }
 }
