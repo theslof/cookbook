@@ -7,13 +7,12 @@ import {Observable} from "rxjs/Observable";
 export class PreferencesProvider {
   private static readonly PREF_INITIALIZED = 'preferences_initialized';
   private static readonly PREF_THEME = 'preferences_theme';
-  private static readonly PREF_THEME_DEFAULT = 'default';
+  private static readonly PREF_THEME_DEFAULT = 'theme-default';
   private preferences = {};
   private theme: BehaviorSubject<string>;
 
   constructor(private storage: Storage) {
     this.theme = new BehaviorSubject<string>(PreferencesProvider.PREF_THEME_DEFAULT);
-    this.theme.subscribe(theme => this.setPreference(PreferencesProvider.PREF_THEME, theme));
     this.initialize();
   }
 
@@ -53,6 +52,6 @@ export class PreferencesProvider {
 
   setTheme(theme: string): void {
     this.theme.next(theme);
-
+    this.setPreference(PreferencesProvider.PREF_THEME, theme);
   }
 }

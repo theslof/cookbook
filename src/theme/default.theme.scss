@@ -1,0 +1,10 @@
+.theme-default {
+  .timedStep {
+    border-left: 2px solid map-get($colors, primary);
+    padding-left: 2px;
+  }
+
+  .timedStepCurrent {
+    border-color: map-get($colors, secondary) !important;
+  }
+}

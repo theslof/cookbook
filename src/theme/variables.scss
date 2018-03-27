@@ -38,52 +38,6 @@ $colors: (
   dark: #222,
 );
 
-button.favorite {
-  font-size: 2em;
-}
-
-.default {
-  .timedStep {
-    border-left: 2px solid map-get($colors, primary);
-    padding-left: 2px;
-  }
-
-  .timedStepCurrent {
-    border-color: map-get($colors, secondary) !important;
-  }
-}
-
-.dark {
-  ion-content, ion-menu, ion-header {
-    background-color: map-get($colors, dark);
-    color: map-get($colors, light);
-  }
-
-  ion-list, ion-item {
-    background-color: map-get($colors, dark);
-    color: map-get($colors, light);
-    border-color: map-get($colors, primaryDark);
-  }
-
-  .toolbar-title {
-    color: map-get($colors, primaryLight);
-  }
-
-  .header .toolbar-background {
-    border-color: map-get($colors, primary);
-    background-color: map-get($colors, dark);
-  }
-
-  .timedStep {
-    border-left: 2px solid map-get($colors, primary);
-    padding-left: 2px;
-  }
-
-  .timedStepCurrent {
-    border-color: map-get($colors, secondary) !important;
-  }
-}
-
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
