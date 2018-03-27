@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, IonicPage, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, NavParams, reorderArray} from 'ionic-angular';
 import {Recipe, RecipesProvider} from "../../providers/recipes/recipes";
 import {Timer, TimerProvider} from "../../providers/timer/timer";
 
@@ -253,5 +253,16 @@ export class ItemPage {
   removeFavorite(){
     this.recipesProvider.removeFavorite(this.uuid);
     this.favorite = false;
+  }
+
+  reorderIngredients(event){
+    this.selectedRecipe.ingredients = reorderArray(this.selectedRecipe.ingredients, event);
+    this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
+  }
+
+  reordersteps(event){
+    this.selectedRecipe.steps = reorderArray(this.selectedRecipe.steps, event);
+    this.selectedRecipe.timers = reorderArray(this.selectedRecipe.timers, event);
+    this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
   }
 }

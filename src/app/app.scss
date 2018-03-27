@@ -19,5 +19,18 @@ button.favorite {
   font-size: 2em;
 }
 
+.timedStep {
+  ion-item {
+    border-left: 2px solid map-get($colors, primary);
+    //  padding-left: 2px;
+  }
+}
+
+.timedStepCurrent {
+  ion-item {
+    border-color: map-get($colors, secondary) !important;
+  }
+}
+
 @import "../theme/default.theme";
 @import "../theme/dark.theme";
