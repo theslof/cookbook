@@ -86,7 +86,9 @@ export class ListPage {
             console.log('Add clicked');
             let recipe: Recipe = RecipesProvider.emptyRecipe();
             recipe.name = data.name;
-            this.recipeProvider.saveRecipe(UUID.UUID(), recipe);
+            let uuid = UUID.UUID();
+            this.recipeProvider.saveRecipe(uuid, recipe)
+              .then(() => this.navCtrl.push(ItemPage, {uuid: uuid}));
           }
         }
       ]

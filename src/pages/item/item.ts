@@ -10,7 +10,7 @@ import {Timer, TimerProvider} from "../../providers/timer/timer";
 })
 export class ItemPage {
   uuid: string;
-  selectedRecipe: Recipe;
+  selectedRecipe: Recipe = <Recipe>{};
   favorite: boolean;
   timer: Timer = {
     id: 0,
@@ -18,6 +18,7 @@ export class ItemPage {
     current: 0,
     asText: '0s',
     uuid: '',
+    name: '',
     stepID: -1,
   };
 
@@ -242,7 +243,7 @@ export class ItemPage {
   }
 
   setTimer(index: number){
-    this.timerProvider.setTimer(this.uuid, index, this.selectedRecipe.timers[index] * 60)
+    this.timerProvider.setTimer(this.uuid, this.selectedRecipe.name, index, this.selectedRecipe.timers[index] * 60)
   }
 
   addFavorite(){

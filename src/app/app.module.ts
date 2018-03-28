@@ -16,6 +16,7 @@ import {NativeAudio} from "@ionic-native/native-audio";
 import { TimerProvider } from '../providers/timer/timer';
 import { PreferencesProvider } from '../providers/preferences/preferences';
 import {SettingsPage} from "../pages/settings/settings";
+import {LocalNotifications} from "@ionic-native/local-notifications";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import {SettingsPage} from "../pages/settings/settings";
     NativeAudio,
     TimerProvider,
     PreferencesProvider,
+    LocalNotifications,
   ]
 })
 export class AppModule {}

@@ -75,14 +75,14 @@ export class RecipesProvider {
     return this.storage.set(RecipesProvider.STORAGE_INDEX, recipes);
   }
 
-  saveRecipe(uuid: string, recipe: Recipe): void {
-    this.storage.set(uuid, recipe)
+  saveRecipe(uuid: string, recipe: Recipe): Promise<any> {
+    return this.storage.set(uuid, recipe)
       .then(() => {
         this.index[uuid] = recipe.name;
         return this.saveRecipeIndex(this.index);
       })
       .then(() => {
-        this.updateRecipes(this.index);
+        return this.updateRecipes(this.index);
       });
   }
 

@@ -17,7 +17,7 @@
 </ion-header>
 
 
-<ion-content *ngIf="selectedRecipe;else noparam" padding>
+<ion-content padding>
   <h2>Ingredients</h2>
   <ion-list>
     <ion-item-group [reorder]="reorderIngredientsToggle.checked" (ionItemReorder)="reorderIngredients($event)">
