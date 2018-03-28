@@ -52,23 +52,30 @@
                         [class.timedStepCurrent]="(uuid == timer.uuid)
                       && (timer.stepID == i) && (timer.current > 0)">
         <ion-item text-wrap>
-          {{step}}
+          <div #stepText id="{{'step_' + i}}" class="step" contenteditable (focus)="editing = i"
+               (blur)="editStep(i, stepText.innerText)">
+            <button ion-button *ngIf="i == editing" large float-right (click)="editStep(i, stepText.innerText)">
+              <ion-icon name="checkmark"></ion-icon>
+            </button>
+            {{step}}
+          </div>
         </ion-item>
         <ion-item-options side="right">
           <button ion-button (click)="deleteStep(i)" color="danger">
             <ion-icon name="trash"></ion-icon>
             Delete
           </button>
-          <button ion-button (click)="editStep(i)">
-            <ion-icon name="build"></ion-icon>
-            Edit
+          <button ion-button (click)="editTimer(i)">
+            <ion-icon name="timer"></ion-icon>
+            Edit timer
           </button>
         </ion-item-options>
         <ion-item-options side="left" *ngIf="selectedRecipe.timers[i] > 0" icon-start>
           <button ion-button (click)="setTimer(i)" expandable
                   [color]="(timer.uuid == uuid) && (timer.stepID == i) && (timer.current > 0)
               ? 'secondary' : 'primary'">
-            <ion-icon name="timer"></ion-icon> {{selectedRecipe.timers[i]}}m
+            <ion-icon name="timer"></ion-icon>
+            {{selectedRecipe.timers[i]}}m
           </button>
         </ion-item-options>
       </ion-item-sliding>
