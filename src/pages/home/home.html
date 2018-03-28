@@ -11,7 +11,7 @@
   <h3>Favorite recipes</h3>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let uuid of index">
+    <ion-item-sliding *ngFor="let uuid of index" >
       <ion-item (click)="itemTapped($event, uuid)">{{recipes[uuid]}}</ion-item>
       <ion-item-options side="right">
         <button ion-button (click)="removeFavorite(uuid)" color="danger">

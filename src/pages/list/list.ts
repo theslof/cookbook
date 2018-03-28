@@ -30,7 +30,26 @@ export class ListPage {
   }
 
   deleteRecipe(uuid: string) {
-    this.recipeProvider.deleteRecipe(uuid);
+    let prompt = this.alertCtrl.create({
+      title: 'Delete recipe',
+      message: `Do you want to permanently delete this recipe?`,
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('No clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            console.log('Yes clicked');
+            this.recipeProvider.deleteRecipe(uuid);
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 
   editRecipe(uuid: string) {
