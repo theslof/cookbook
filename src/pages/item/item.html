@@ -52,13 +52,21 @@
                         [class.timedStepCurrent]="(uuid == timer.uuid)
                       && (timer.stepID == i) && (timer.current > 0)">
         <ion-item text-wrap>
-          <div #stepText id="{{'step_' + i}}" class="step" contenteditable (focus)="editing = i"
-               (blur)="editStep(i, stepText.innerText)">
-            <button ion-button *ngIf="i == editing" large float-right (click)="editStep(i, stepText.innerText)">
-              <ion-icon name="checkmark"></ion-icon>
-            </button>
-            {{step}}
-          </div>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div #stepText id="{{'step_' + i}}" class="step" contenteditable (focus)="editing = i"
+                     (blur)="editStep(i, stepText.innerText)">
+                  {{step}}
+                </div>
+              </ion-col>
+              <ion-col *ngIf="i == editing" col-auto>
+                <button ion-button large (click)="editStep(i, stepText.innerText)">
+                  <ion-icon name="checkmark"></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-item>
         <ion-item-options side="right">
           <button ion-button (click)="deleteStep(i)" color="danger">

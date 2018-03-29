@@ -1,6 +1,5 @@
 // http://ionicframework.com/docs/theming/
 
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -17,6 +16,11 @@
 
 button.favorite {
   font-size: 2em;
+}
+
+.step {
+  min-width: 2em;
+  min-height: 100%;
 }
 
 .timedStep {
