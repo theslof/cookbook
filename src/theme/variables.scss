@@ -28,12 +28,9 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary: #8BC34A,
-  primaryLight: #C2FF7A,
-  primaryDark: #4F7621,
-  secondary: #B14AC3,
-  secondaryDark: #681576,
-  danger: #f53d3d,
+  primary: #4cd964,
+  secondary: #5856d6,
+  danger: #ff3b30,
   light: #f4f4f4,
   dark: #222,
 );
@@ -41,6 +38,8 @@ $colors: (
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
+
+
 
 // App Material Design Variables
 // --------------------------------------------------
