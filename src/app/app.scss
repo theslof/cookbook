@@ -40,5 +40,10 @@ button.favorite {
   }
 }
 
+[contenteditable] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 @import "../theme/default.theme";
 @import "../theme/dark.theme";
