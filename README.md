@@ -3,4 +3,5 @@ Written in Ionic Angular, it's a first look at how apps are developed using this
 
 This project requires npm, ionic and cordova. Install dependencies as follows:
 - npm install
-- cordova prepare
+- ionic serve
+- ionic cordova prepare
