@@ -1,61 +1,22 @@
 import {Recipe} from "./recipes";
 
-export const RECIPES:Recipe[] = [
+export const RECIPES: Recipe[] = [
   {
     name: "Pock-marked old woman's tofu",
     ingredients: [
-      {
-        quantity: "500g",
-        name: "Tofu",
-      },
-      {
-        quantity: "",
-        name: "Salt",
-      },
-      {
-        quantity: "4",
-        name: "Spring onions, green part",
-      },
-      {
-        quantity: "4 tbsp",
-        name: "Cooking oil",
-      },
-      {
-        quantity: "2½ tbsp",
-        name: "Sichuan chilli bean paste",
-      },
-      {
-        quantity: "1 tbsp",
-        name: "Fermented black beans, rinsed and drained",
-      },
-      {
-        quantity: "2 tsp",
-        name: "Ground red chillies (optional)",
-      },
-      {
-        quantity: "1 tbsp",
-        name: "Finely chopped ginger",
-      },
-      {
-        quantity: "1 tbsp",
-        name: "Finely chopped garlic",
-      },
-      {
-        quantity: "100ml",
-        name: "Vegetable stock",
-      },
-      {
-        quantity: "¼ tsp",
-        name: "Ground white pepper",
-      },
-      {
-        quantity: "2 tsp",
-        name: "Potato flour mixed with 2 tbsp cold water",
-      },
-      {
-        quantity: "¼–½ tsp",
-        name: "Ground roasted sichuan pepper",
-      }
+      "500g Tofu",
+      "Salt",
+      "4 Spring onions, green part",
+      "4 tbsp Cooking oil",
+      "2½ tbsp Sichuan chilli bean paste",
+      "1 tbsp Fermented black beans, rinsed and drained",
+      "2 tsp Ground red chillies (optional)",
+      "1 tbsp Finely chopped ginger",
+      "1 tbsp Finely chopped garlic",
+      "100ml Vegetable stock",
+      "¼ tsp Ground white pepper",
+      "2 tsp Potato flour mixed with 2 tbsp cold water",
+      "¼–½ tsp Ground roasted sichuan pepper",
     ],
     steps: [
       "Cut the tofu into 2cm cubes and leave to steep in very hot, lightly salted water while you prepare the other ingredients (do not allow the water to boil or the tofu will become porous and less tender). Slice the baby leeks or spring onion greens at a steep angle into thin \"horse ears\".",
@@ -76,46 +37,16 @@ export const RECIPES:Recipe[] = [
   {
     name: "Ants climbing a tree",
     ingredients: [
-      {
-        quantity: "120g",
-        name: "Vermicelli noodles",
-      },
-      {
-        quantity: "1 tbsp",
-        name: "Cooking oil",
-      },
-      {
-        quantity: "1 tbsp",
-        name: "Finely minced ginger",
-      },
-      {
-        quantity: "1 tbsp",
-        name: "Spicy fermented bean paste",
-      },
-      {
-        quantity: "120g",
-        name: "Ground meat (pork, chicken or beef)",
-      },
-      {
-        quantity: "5dl",
-        name: "Chicken stock",
-      },
-      {
-        quantity: "½ tsp",
-        name: "Sugar",
-      },
-      {
-        quantity: "1 tsp",
-        name: "Dark soy sauce",
-      },
-      {
-        quantity: "2 tsp",
-        name: "Light soy sauce",
-      },
-      {
-        quantity: "½-1dl",
-        name: "Chopped scallion",
-      }
+      "120g Vermicelli noodles",
+      "1 tbsp Cooking oil",
+      "1 tbsp Finely minced ginger",
+      "1 tbsp Spicy fermented bean paste",
+      "120g Ground meat (pork, chicken or beef)",
+      "5dl Chicken stock",
+      "½ tsp Sugar",
+      "1 tsp Dark soy sauce",
+      "2 tsp Light soy sauce",
+      "½-1dl Chopped scallion",
     ],
     steps: [
       "Soak the dry noodles in cold water for 10 minutes. Rinse, drain and set aside. In a wok over medium heat, add the oil and minced ginger. Cook the ginger for about a minute, and add the spicy bean sauce.",
@@ -131,20 +62,4 @@ export const RECIPES:Recipe[] = [
     ],
     imageUrl: ""
   },
-/*  {
-    name: "",
-    ingredients: [
-      {
-        quantity: "",
-        name: "",
-      }
-    ],
-    steps: [
-      ""
-    ],
-    timers: [
-      0
-    ],
-    imageUrl: ""
-  }*/
 ];

@@ -147,10 +147,7 @@ export interface RecipeIndex {
 
 export interface Recipe {
   name: string,
-  ingredients: Array<{
-    quantity: string,
-    name: string,
-  }>,
+  ingredients: Array<string>,
   steps: Array<string>,
   timers: Array<number>,
   imageUrl: string

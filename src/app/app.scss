@@ -23,6 +23,10 @@ button.favorite {
   min-height: 100%;
 }
 
+.ingredient {
+  min-width: 2em;
+}
+
 .timedStep {
   ion-item {
     border-left: 2px solid map-get($colors, primary);

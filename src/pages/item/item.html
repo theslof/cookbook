@@ -21,14 +21,29 @@
   <h2>Ingredients</h2>
   <ion-list>
     <ion-item-group [reorder]="reorderIngredientsToggle.checked" (ionItemReorder)="reorderIngredients($event)">
-      <ion-item-sliding *ngFor="let ingredient of selectedRecipe.ingredients">
-        <ion-item>{{ingredient.quantity}} {{ingredient.name}}</ion-item>
+      <ion-item-sliding *ngFor="let ingredient of selectedRecipe.ingredients; let i=index">
+        <ion-item text-wrap>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div #itemText id="{{'ingredient_' + i}}" class="ingredient" contenteditable (focus)="editingIngredient = i"
+                     (blur)="editIngredient(i, itemText.innerText)">
+                  {{ingredient}}
+                </div>
+              </ion-col>
+              <ion-col *ngIf="i == editingIngredient" col-auto>
+                <button ion-button (click)="editIngredient(i, itemText.innerText)">
+                  <ion-icon name="checkmark"></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+          </ion-grid></ion-item>
         <ion-item-options side="right">
-          <button ion-button (click)="deleteIngredient(ingredient)" color="danger">
+          <button ion-button (click)="deleteIngredient(i)" color="danger">
             <ion-icon name="trash"></ion-icon>
             Delete
           </button>
-          <button ion-button (click)="editIngredient(ingredient)">
+          <button ion-button (click)="editIngredient(i)">
             <ion-icon name="build"></ion-icon>
             Edit
           </button>
@@ -55,12 +70,12 @@
           <ion-grid>
             <ion-row>
               <ion-col>
-                <div #stepText id="{{'step_' + i}}" class="step" contenteditable (focus)="editing = i"
+                <div #stepText id="{{'step_' + i}}" class="step" contenteditable (focus)="editingStep = i"
                      (blur)="editStep(i, stepText.innerText)">
                   {{step}}
                 </div>
               </ion-col>
-              <ion-col *ngIf="i == editing" col-auto>
+              <ion-col *ngIf="i == editingStep" col-auto>
                 <button ion-button large (click)="editStep(i, stepText.innerText)">
                   <ion-icon name="checkmark"></ion-icon>
                 </button>

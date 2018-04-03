@@ -12,7 +12,8 @@ export class ItemPage {
   uuid: string;
   selectedRecipe: Recipe = <Recipe>{};
   favorite: boolean;
-  editing: number = -1;
+  editingStep: number = -1;
+  editingIngredient: number = -1;
   timer: Timer = {
     id: 0,
     time: 0,
@@ -37,80 +38,33 @@ export class ItemPage {
   }
 
   addIngredient() {
-    let prompt = this.alertCtrl.create({
-      title: 'Add ingredient',
-      message: "Enter a quantity and name for the ingredient:",
-      inputs: [
-        {
-          name: 'quantity',
-          placeholder: 'Quantity',
-        },
-        {
-          name: 'name',
-          placeholder: 'Ingredient',
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Add',
-          handler: data => {
-            console.log('Add clicked');
-            this.selectedRecipe.ingredients.push({quantity: data.quantity, name: data.name});
-            this.saveChanges();
-          }
-        }
-      ]
-    });
-    prompt.present();
+    this.selectedRecipe.ingredients.push('');
+    this.saveChanges()
+      .then(() => {
+        let item = document.getElementById('ingredient_' + (this.selectedRecipe.ingredients.length - 1));
+        item.focus();
+      });
   }
 
-  editIngredient(ingredient: { quantity: string, name: string }) {
-    let prompt = this.alertCtrl.create({
-      title: 'Edit ingredient',
-      message: "Modify the quantity and/or name for the ingredient:",
-      inputs: [
-        {
-          name: 'quantity',
-          placeholder: 'Quantity',
-          value: ingredient.quantity
-        },
-        {
-          name: 'name',
-          placeholder: 'Ingredient',
-          value: ingredient.name
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Save',
-          handler: data => {
-            console.log('Saved clicked');
-            ingredient.name = data.name;
-            ingredient.quantity = data.quantity;
-            this.saveChanges();
-          }
-        }
-      ]
-    });
-    prompt.present();
+  editIngredient(index: number, text: string) {
+    this.editingIngredient = -1;
+    if(text == null || text.replace(/\s/g,'') == ''){
+      this.deleteIngredient(index, true);
+      return;
+    }
+    this.selectedRecipe.ingredients[index] = text;
+    this.saveChanges();
   }
 
-  deleteIngredient(ingredient: { quantity: string, name: string }) {
+  deleteIngredient(index: number, silent?: boolean) {
+    if(silent){
+      this.selectedRecipe.ingredients.splice(index, 1);
+      this.saveChanges();
+      return;
+    }
     let prompt = this.alertCtrl.create({
       title: 'Remove ingredient',
-      message: `Do you want to remove ${ingredient.name}?`,
+      message: `Do you want to remove '${this.selectedRecipe.ingredients[index]}'?`,
       buttons: [
         {
           text: 'No',
@@ -122,7 +76,6 @@ export class ItemPage {
           text: 'Yes',
           handler: () => {
             console.log('Yes clicked');
-            let index: number = this.selectedRecipe.ingredients.indexOf(ingredient);
             this.selectedRecipe.ingredients.splice(index, 1);
             this.saveChanges();
           }
@@ -237,7 +190,7 @@ export class ItemPage {
   }
 
   editStep(index: number, text: string) {
-    this.editing = -1;
+    this.editingStep = -1;
     if(text == null || text.replace(/\s/g,'') == ''){
       this.deleteStep(index, true);
       return;
