@@ -110,12 +110,12 @@
         </ion-item>
       </ion-item-group>
     </ion-list>
-    <ion-fab bottom right *ngIf="timer.current > 0">
-      <button ion-fab (click)="timerProvider.cancelTimer()" [color]="timer.current < 60 ? 'danger' : 'secondary'">
-        {{timer.asText}}
-      </button>
-    </ion-fab>
   </div>
+  <ion-fab bottom right *ngIf="timer.current > 0">
+    <button ion-fab (click)="timerProvider.cancelTimer()" [color]="timer.current < 60 ? 'danger' : 'secondary'">
+      {{timer.asText}}
+    </button>
+  </ion-fab>
 </ion-content>
 
 <ng-template #defaultTitle>Unknown Item</ng-template>
