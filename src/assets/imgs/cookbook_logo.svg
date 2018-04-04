@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="120.00023mm"
+   height="120.00023mm"
+   viewBox="0 0 120.00023 120.00023"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
+   sodipodi:docname="cookbook_logo.svg"
+   inkscape:export-filename="/Users/theslof/Downloads/cookbook_logo.png"
+   inkscape:export-xdpi="216.75415"
+   inkscape:export-ydpi="216.75415">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.57192761"
+     inkscape:cx="173.98196"
+     inkscape:cy="155.18375"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="855"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-39.999983,-129.49968)">
+    <path
+       style="fill:#4cd964;fill-opacity:1;stroke:#4cd964;stroke-width:5;stroke-linejoin:miter;stroke-miterlimit:4.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 40.00444,184.92302 c 3.497189,0 9.883083,7.74363 9.924765,15.60815 h 0.07441 v 16.7067 c 0,10.92045 9.047237,19.71197 20.285132,19.71197 h 59.422513 c 11.23789,0 20.28513,-8.79152 20.28513,-19.71197 v -16.7067 h 0.0744 c 0.0417,-7.86452 6.42756,-15.60815 9.92476,-15.60815 h -9.99917 -99.992775 z"
+       id="rect815"
+       inkscape:connector-curvature="0" />
+    <path
+       id="rect839"
+       style="fill:none;fill-opacity:1;stroke:#4cd964;stroke-width:5;stroke-linejoin:bevel;stroke-miterlimit:4.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 99.999905,160.11106 39.997065,-18.29203 v 52.02676 l -39.997065,18.29203 z m -39.997072,-18.29203 39.997072,18.29203 v 52.02676 L 60.002833,193.84579 Z"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       d="m 67.410625,159.43876 25.181489,11.47678"
+       style="fill:none;fill-opacity:1;stroke:#4cd964;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path851" />
+    <path
+       id="path853"
+       style="fill:none;fill-opacity:1;stroke:#4cd964;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 67.410625,173.20417 25.181489,11.47679"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       id="path855"
+       style="fill:none;fill-opacity:1;stroke:#4cd964;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 132.58917,159.43876 107.4077,170.91554"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       d="M 132.58917,173.20417 107.4077,184.68096"
+       style="fill:none;fill-opacity:1;stroke:#4cd964;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path857" />
+  </g>
+</svg>
