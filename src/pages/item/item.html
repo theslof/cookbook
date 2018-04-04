@@ -18,100 +18,104 @@
 
 
 <ion-content padding>
-  <h2>Ingredients</h2>
-  <ion-list>
-    <ion-item-group [reorder]="reorderIngredientsToggle.checked" (ionItemReorder)="reorderIngredients($event)">
-      <ion-item-sliding *ngFor="let ingredient of selectedRecipe.ingredients; let i=index">
-        <ion-item text-wrap>
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <div #itemText id="{{'ingredient_' + i}}" class="ingredient" contenteditable (focus)="editingIngredient = i"
-                     (blur)="editIngredient(i, itemText.innerText)">
-                  {{ingredient}}
-                </div>
-              </ion-col>
-              <ion-col *ngIf="i == editingIngredient" col-auto>
-                <button ion-button (click)="editIngredient(i, itemText.innerText)">
-                  <ion-icon name="checkmark"></ion-icon>
-                </button>
-              </ion-col>
-            </ion-row>
-          </ion-grid></ion-item>
-        <ion-item-options side="right">
-          <button ion-button (click)="deleteIngredient(i)" color="danger">
-            <ion-icon name="trash"></ion-icon>
-            Delete
-          </button>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-item-group>
-    <ion-item-group>
-      <ion-item color="primary" (click)="addIngredient()">Add ingredient</ion-item>
-      <ion-item>
-        <ion-label>Reorder</ion-label>
-        <ion-toggle #reorderIngredientsToggle></ion-toggle>
-      </ion-item>
-    </ion-item-group>
-  </ion-list>
-
-  <h2>Directions</h2>
-  <ion-list>
-    <ion-item-group [reorder]="reorderStepsToggle.checked" (ionItemReorder)="reorderSteps($event)">
-      <ion-item-sliding *ngFor="let step of selectedRecipe.steps; let i=index"
-                        [class.timedStep]="selectedRecipe.timers[i] > 0"
-                        [class.timedStepCurrent]="(uuid == timer.uuid)
-                      && (timer.stepID == i) && (timer.current > 0)">
-        <ion-item text-wrap>
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <div #stepText id="{{'step_' + i}}" class="step" contenteditable (focus)="editingStep = i"
-                     (blur)="editStep(i, stepText.innerText)">
-                  {{step}}
-                </div>
-              </ion-col>
-              <ion-col *ngIf="i == editingStep" col-auto>
-                <button ion-button large (click)="editStep(i, stepText.innerText)">
-                  <ion-icon name="checkmark"></ion-icon>
-                </button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+  <div *ngIf="selectedRecipe; else noparam">
+    <h2>Ingredients</h2>
+    <ion-list>
+      <ion-item-group [reorder]="reorderIngredientsToggle.checked" (ionItemReorder)="reorderIngredients($event)">
+        <ion-item-sliding *ngFor="let ingredient of selectedRecipe.ingredients; let i=index">
+          <ion-item text-wrap>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <div #itemText id="{{'ingredient_' + i}}" class="ingredient" contenteditable
+                       (focus)="editingIngredient = i"
+                       (blur)="editIngredient(i, itemText.innerText)">
+                    {{ingredient}}
+                  </div>
+                </ion-col>
+                <ion-col *ngIf="i == editingIngredient" col-auto>
+                  <button ion-button (click)="editIngredient(i, itemText.innerText)">
+                    <ion-icon name="checkmark"></ion-icon>
+                  </button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button (click)="deleteIngredient(i)" color="danger">
+              <ion-icon name="trash"></ion-icon>
+              Delete
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-item-group>
+      <ion-item-group>
+        <ion-item *ngIf="editingIngredient < 0" color="primary" (click)="addIngredient()">Add ingredient</ion-item>
+        <ion-item>
+          <ion-label>Reorder</ion-label>
+          <ion-toggle #reorderIngredientsToggle></ion-toggle>
         </ion-item>
-        <ion-item-options side="right">
-          <button ion-button (click)="deleteStep(i)" color="danger">
-            <ion-icon name="trash"></ion-icon>
-            Delete
-          </button>
-          <button ion-button (click)="editTimer(i)">
-            <ion-icon name="timer"></ion-icon>
-            Edit timer
-          </button>
-        </ion-item-options>
-        <ion-item-options side="left" *ngIf="selectedRecipe.timers[i] > 0" icon-start>
-          <button ion-button (click)="setTimer(i)" expandable
-                  [color]="(timer.uuid == uuid) && (timer.stepID == i) && (timer.current > 0)
+      </ion-item-group>
+    </ion-list>
+
+    <h2>Directions</h2>
+    <ion-list>
+      <ion-item-group [reorder]="reorderStepsToggle.checked" (ionItemReorder)="reorderSteps($event)">
+        <ion-item-sliding *ngFor="let step of selectedRecipe.steps; let i=index"
+                          [class.timedStep]="selectedRecipe.timers[i] > 0"
+                          [class.timedStepCurrent]="(uuid == timer.uuid)
+                      && (timer.stepID == i) && (timer.current > 0)">
+          <ion-item text-wrap>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <div #stepText id="{{'step_' + i}}" class="step" contenteditable (focus)="editingStep = i"
+                       (blur)="editStep(i, stepText.innerText)">
+                    {{step}}
+                  </div>
+                </ion-col>
+                <ion-col *ngIf="i == editingStep" col-auto>
+                  <button ion-button large (click)="editStep(i, stepText.innerText)">
+                    <ion-icon name="checkmark"></ion-icon>
+                  </button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button (click)="deleteStep(i)" color="danger">
+              <ion-icon name="trash"></ion-icon>
+              Delete
+            </button>
+            <button ion-button (click)="editTimer(i)">
+              <ion-icon name="timer"></ion-icon>
+              Edit timer
+            </button>
+          </ion-item-options>
+          <ion-item-options side="left" *ngIf="selectedRecipe.timers[i] > 0" icon-start>
+            <button ion-button (click)="setTimer(i)" expandable
+                    [color]="(timer.uuid == uuid) && (timer.stepID == i) && (timer.current > 0)
               ? 'secondary' : 'primary'">
-            <ion-icon name="timer"></ion-icon>
-            {{selectedRecipe.timers[i]}}m
-          </button>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-item-group>
-    <ion-item-group>
-      <ion-item color="primary" (click)="addStep()">Add step</ion-item>
-      <ion-item>
-        <ion-label>Edit order</ion-label>
-        <ion-toggle #reorderStepsToggle></ion-toggle>
-      </ion-item>
-    </ion-item-group>
-  </ion-list>
-  <ion-fab bottom right *ngIf="timer.current > 0">
-    <button ion-fab (click)="timerProvider.cancelTimer()" [color]="timer.current < 60 ? 'danger' : 'secondary'">
-      {{timer.asText}}
-    </button>
-  </ion-fab>
+              <ion-icon name="timer"></ion-icon>
+              {{selectedRecipe.timers[i]}}m
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-item-group>
+      <ion-item-group>
+        <ion-item *ngIf="editingStep < 0" color="primary" (click)="addStep()">Add step</ion-item>
+        <ion-item>
+          <ion-label>Edit order</ion-label>
+          <ion-toggle #reorderStepsToggle></ion-toggle>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+    <ion-fab bottom right *ngIf="timer.current > 0">
+      <button ion-fab (click)="timerProvider.cancelTimer()" [color]="timer.current < 60 ? 'danger' : 'secondary'">
+        {{timer.asText}}
+      </button>
+    </ion-fab>
+  </div>
 </ion-content>
 
 <ng-template #defaultTitle>Unknown Item</ng-template>
