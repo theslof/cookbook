@@ -48,13 +48,11 @@ export class ItemPage {
 
   editIngredient(index: number, element: HTMLDivElement) {
     this.editingIngredient = -1;
-    let text:string = element.innerText.replace(/\s+/g, ' ');
-    if(text == null || text.replace(/\s/g,'') == ''){
+    if(element.innerText == null || element.innerText.replace(/\s/g,'') == ''){
       this.deleteIngredient(index, true);
       return;
     }
-    this.selectedRecipe.ingredients[index] = text;
-    element.innerText = text;
+    this.selectedRecipe.ingredients[index] = element.innerText.replace(/\s+/g, ' ');
     this.saveChanges();
   }
 
@@ -99,13 +97,11 @@ export class ItemPage {
 
   editStep(index: number, element: HTMLDivElement) {
     this.editingStep = -1;
-    let text:string = element.innerText.replace(/\s+/g, ' ');
-    if(text == null || text.replace(/\s/g,'') == ''){
+    if(element.innerText == null || element.innerText.replace(/\s/g,'') == ''){
       this.deleteStep(index, true);
       return;
     }
-    this.selectedRecipe.steps[index] = text;
-    element.innerText = text;
+    this.selectedRecipe.steps[index] = element.innerText.replace(/\s+/g, ' ');
     this.saveChanges();
   }
 

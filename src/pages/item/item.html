@@ -27,14 +27,15 @@
             <ion-grid>
               <ion-row>
                 <ion-col>
-                  <div #itemText id="{{'ingredient_' + i}}" class="ingredient" [attr.contenteditable]="!reorderIngredientsToggle.checked"
+                  <div #itemText id="{{'ingredient_' + i}}" class="ingredient"
+                       [attr.contenteditable]="!reorderIngredientsToggle.checked"
                        (focus)="editingIngredient = i"
-                       (blur)="editIngredient(i, itemText)">
-                    {{ingredient}}
+                       (blur)="editIngredient(i, itemText)"
+                       [(innerText)]="selectedRecipe.ingredients[i]">
                   </div>
                 </ion-col>
                 <ion-col *ngIf="i == editingIngredient" col-auto>
-                  <button ion-button (click)="editIngredient(i, itemText.innerText)">
+                  <button ion-button (click)="editIngredient(i, itemText)">
                     <ion-icon name="checkmark"></ion-icon>
                   </button>
                 </ion-col>
@@ -71,8 +72,8 @@
                 <ion-col>
                   <div #stepText id="{{'step_' + i}}" class="step" [attr.contenteditable]="!reorderStepsToggle.checked"
                        (focus)="editingStep = i"
-                       (blur)="editStep(i, stepText.innerText)">
-                    {{step}}
+                       (blur)="editStep(i, stepText)"
+                       [(innerText)]="selectedRecipe.steps[i]">
                   </div>
                 </ion-col>
                 <ion-col *ngIf="i == editingStep" col-auto>
