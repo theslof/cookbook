@@ -1,12 +1,13 @@
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
-      <ion-icon [name]="menuIcon"></ion-icon>
+      <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title *ngIf="!searching">Recipes</ion-title>
     <ion-searchbar #filterInput *ngIf="searching" [(ngModel)]="searchString" (ionInput)="filterIndex(recipes)"
                    (ionCancel)="searching = false" (ionClear)="clearSearch()" [showCancelButton]="true"
-                   cancelButtonText="Clear" [animated]="true"></ion-searchbar>
+                   cancelButtonText="Clear" [animated]="true" (ionBlur)="searching = (searchString != '')">
+    </ion-searchbar>
     <ion-buttons end>
       <button ion-button class="favorite" (click)="toggleSearch()">
         <ion-icon name="search"></ion-icon>
@@ -18,7 +19,8 @@
 <ion-content>
   <ion-list>
     <ion-item-sliding *ngFor="let uuid of index">
-      <ion-item (click)="itemTapped($event, uuid)">{{recipes[uuid]}}</ion-item>
+      <ion-item (click)="itemTapped($event, uuid)">{{recipes[uuid]}}
+        <ion-icon item-end name="custom-arrow-right" class="list-arrow"></ion-icon></ion-item>
       <ion-item-options side="right">
         <button ion-button (click)="deleteRecipe(uuid)" color="danger">
           <ion-icon name="trash"></ion-icon>

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, Platform} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import {ItemPage} from "../item/item";
 import {RecipeIndex, RecipesProvider} from "../../providers/recipes/recipes";
 import {ListPage} from "../list/list";
@@ -11,11 +11,8 @@ import {ListPage} from "../list/list";
 export class HomePage {
   recipes: RecipeIndex = {};
   index: string[] = [];
-  menuIcon: string = 'custom-logo';
 
-  constructor(public navCtrl: NavController, private recipeProvider: RecipesProvider, private pltf: Platform) {
-    if(pltf.is('ios'))
-      this.menuIcon = 'menu';
+  constructor(public navCtrl: NavController, private recipeProvider: RecipesProvider) {
     this.recipeProvider.getFavorites().subscribe((recipes: RecipeIndex) => {
       this.recipes = recipes;
       this.index = Object.keys(recipes);

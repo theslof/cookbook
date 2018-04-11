@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, IonicPage, Platform} from 'ionic-angular';
+import {AlertController, IonicPage} from 'ionic-angular';
 import {RecipesProvider} from "../../providers/recipes/recipes";
 import {PreferencesProvider} from "../../providers/preferences/preferences";
 
@@ -11,12 +11,9 @@ import {PreferencesProvider} from "../../providers/preferences/preferences";
 export class SettingsPage {
 
   theme: string;
-  menuIcon: string = 'custom-logo';
 
   constructor(public recipeProvider: RecipesProvider, private alertCtrl: AlertController,
-              private prefs: PreferencesProvider, private pltf: Platform) {
-    if(pltf.is('ios'))
-      this.menuIcon = 'menu';
+              private prefs: PreferencesProvider) {
     this.prefs.getTheme().subscribe(theme => this.theme = theme);
   }
 

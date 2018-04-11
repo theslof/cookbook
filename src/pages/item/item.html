@@ -27,9 +27,9 @@
             <ion-grid>
               <ion-row>
                 <ion-col>
-                  <div #itemText id="{{'ingredient_' + i}}" class="ingredient" contenteditable
+                  <div #itemText id="{{'ingredient_' + i}}" class="ingredient" [attr.contenteditable]="!reorderIngredientsToggle.checked"
                        (focus)="editingIngredient = i"
-                       (blur)="editIngredient(i, itemText.innerText)">
+                       (blur)="editIngredient(i, itemText)">
                     {{ingredient}}
                   </div>
                 </ion-col>
@@ -53,7 +53,7 @@
         <ion-item *ngIf="editingIngredient < 0" color="primary" (click)="addIngredient()">Add ingredient</ion-item>
         <ion-item>
           <ion-label>Reorder</ion-label>
-          <ion-toggle #reorderIngredientsToggle></ion-toggle>
+          <ion-toggle #reorderIngredientsToggle (ionChange)="editingIngredient = -1"></ion-toggle>
         </ion-item>
       </ion-item-group>
     </ion-list>
@@ -69,13 +69,14 @@
             <ion-grid>
               <ion-row>
                 <ion-col>
-                  <div #stepText id="{{'step_' + i}}" class="step" contenteditable (focus)="editingStep = i"
+                  <div #stepText id="{{'step_' + i}}" class="step" [attr.contenteditable]="!reorderStepsToggle.checked"
+                       (focus)="editingStep = i"
                        (blur)="editStep(i, stepText.innerText)">
                     {{step}}
                   </div>
                 </ion-col>
                 <ion-col *ngIf="i == editingStep" col-auto>
-                  <button ion-button large (click)="editStep(i, stepText.innerText)">
+                  <button ion-button large (click)="editStep(i, stepText)">
                     <ion-icon name="checkmark"></ion-icon>
                   </button>
                 </ion-col>
@@ -106,7 +107,7 @@
         <ion-item *ngIf="editingStep < 0" color="primary" (click)="addStep()">Add step</ion-item>
         <ion-item>
           <ion-label>Edit order</ion-label>
-          <ion-toggle #reorderStepsToggle></ion-toggle>
+          <ion-toggle #reorderStepsToggle (ionChange)="editingStep = -1"></ion-toggle>
         </ion-item>
       </ion-item-group>
     </ion-list>

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
-      <ion-icon [name]="menuIcon"></ion-icon>
+      <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Home</ion-title>
   </ion-navbar>
@@ -15,12 +15,12 @@
       <ion-item (click)="itemTapped($event, uuid)">{{recipes[uuid]}}</ion-item>
       <ion-item-options side="right">
         <button ion-button (click)="removeFavorite(uuid)" color="danger">
-          <ion-icon name="trash"></ion-icon>
+          <ion-icon name="star"></ion-icon>
           Remove
         </button>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
 
-  <button ion-button color="primary" (click)="openList()">View all recipes</button>
+  <button ion-button color="primary" (click)="openList()"><ion-icon name="custom-logo" style="margin-right: 1em"></ion-icon>View all recipes</button>
 </ion-content>

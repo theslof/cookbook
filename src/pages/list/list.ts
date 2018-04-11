@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {AlertController, NavController, Platform, Searchbar} from 'ionic-angular';
+import {AlertController, NavController, Searchbar} from 'ionic-angular';
 import {ItemPage} from "../item/item";
 import {RecipesProvider, Recipe, RecipeIndex} from "../../providers/recipes/recipes";
 import {UUID} from "angular2-uuid";
@@ -14,12 +14,9 @@ export class ListPage {
   index: string[] = [];
   searching: boolean = false;
   searchString: string = '';
-  menuIcon: string = 'custom-logo';
 
   constructor(public navCtrl: NavController, private recipeProvider: RecipesProvider,
-              private alertCtrl: AlertController, private pltf: Platform) {
-    if(pltf.is('ios'))
-      this.menuIcon = 'menu';
+              private alertCtrl: AlertController) {
     this.recipeProvider.getRecipes().subscribe((recipes: RecipeIndex) => {
       this.recipes = recipes;
       this.filterIndex();

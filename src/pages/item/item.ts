@@ -46,13 +46,15 @@ export class ItemPage {
       });
   }
 
-  editIngredient(index: number, text: string) {
+  editIngredient(index: number, element: HTMLDivElement) {
     this.editingIngredient = -1;
+    let text:string = element.innerText.replace(/\s+/g, ' ');
     if(text == null || text.replace(/\s/g,'') == ''){
       this.deleteIngredient(index, true);
       return;
     }
     this.selectedRecipe.ingredients[index] = text;
+    element.innerText = text;
     this.saveChanges();
   }
 
@@ -93,6 +95,18 @@ export class ItemPage {
         let step = document.getElementById('step_' + (this.selectedRecipe.steps.length - 1));
         step.focus();
       });
+  }
+
+  editStep(index: number, element: HTMLDivElement) {
+    this.editingStep = -1;
+    let text:string = element.innerText.replace(/\s+/g, ' ');
+    if(text == null || text.replace(/\s/g,'') == ''){
+      this.deleteStep(index, true);
+      return;
+    }
+    this.selectedRecipe.steps[index] = text;
+    element.innerText = text;
+    this.saveChanges();
   }
 
   editTimer(index: number) {
@@ -187,16 +201,6 @@ export class ItemPage {
     this.selectedRecipe.steps = reorderArray(this.selectedRecipe.steps, event);
     this.selectedRecipe.timers = reorderArray(this.selectedRecipe.timers, event);
     this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
-  }
-
-  editStep(index: number, text: string) {
-    this.editingStep = -1;
-    if(text == null || text.replace(/\s/g,'') == ''){
-      this.deleteStep(index, true);
-      return;
-    }
-    this.selectedRecipe.steps[index] = text;
-    this.saveChanges();
   }
 
   saveChanges(): Promise<any> {
