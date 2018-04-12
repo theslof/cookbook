@@ -19,7 +19,7 @@
 <ion-content>
   <ion-list>
     <ion-item-sliding *ngFor="let uuid of index">
-      <ion-item (click)="itemTapped($event, uuid)">{{recipes[uuid]}}
+      <ion-item (click)="itemTapped($event, uuid)" class="delete">{{recipes[uuid]}}
         <ion-icon item-end name="custom-arrow-right" class="list-arrow"></ion-icon></ion-item>
       <ion-item-options side="right">
         <button ion-button (click)="deleteRecipe(uuid)" color="danger">

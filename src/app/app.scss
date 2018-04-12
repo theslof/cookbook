@@ -68,5 +68,44 @@ ion-icon {
   }
 }
 
+ion-item.delete {
+  animation-name: shrink !important;
+  animation-duration: 0.5s !important;
+
+  .item-inner{
+    animation-name: nudge !important;
+    animation-duration: 0.5s !important;
+  }
+}
+
+@keyframes shrink {
+  from {
+    border-right: 0px solid map-get($colors, danger);
+    animation-timing-function: ease-out;
+  }
+  25% {
+    border-right: 30px solid map-get($colors, danger);
+    animation-timing-function: ease-in-out;
+  }
+  to {
+    border-right: 0px solid map-get($colors, danger);
+    animation-timing-function: ease-in;
+  }
+}
+
+@keyframes nudge {
+  from {
+    animation-timing-function: ease-out;
+  }
+  25% {
+    transform: translateX(-30px);
+    animation-timing-function: ease-in-out;
+  }
+  to {
+    transform: translateX(0px);
+    animation-timing-function: ease-in;
+  }
+}
+
 @import "../theme/default.theme";
 @import "../theme/dark.theme";
