@@ -113,6 +113,7 @@ export class RecipesProvider {
   static emptyRecipe(): Recipe {
     return {
       name: "",
+      estTime: 0,
       ingredients: [],
       steps: [],
       timers: [],
@@ -137,6 +138,8 @@ export class RecipesProvider {
   }
 
   clearData(): Promise<any> {
+    this.recipe.next({});
+    this.favoritesSubject.next({});
     return this.storage.clear();
   }
 }
@@ -147,6 +150,7 @@ export interface RecipeIndex {
 
 export interface Recipe {
   name: string,
+  estTime: number,
   ingredients: Array<string>,
   steps: Array<string>,
   timers: Array<number>,

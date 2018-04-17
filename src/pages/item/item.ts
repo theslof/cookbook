@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {AlertController, IonicPage, NavParams, reorderArray} from 'ionic-angular';
 import {Recipe, RecipesProvider} from "../../providers/recipes/recipes";
 import {Timer, TimerProvider} from "../../providers/timer/timer";
@@ -9,6 +9,7 @@ import {Timer, TimerProvider} from "../../providers/timer/timer";
   templateUrl: 'item.html',
 })
 export class ItemPage {
+  @ViewChild('estimatedTime') estimatedTime;
   uuid: string;
   selectedRecipe: Recipe = <Recipe>{};
   favorite: boolean;
@@ -48,7 +49,7 @@ export class ItemPage {
 
   editIngredient(index: number, element: HTMLDivElement) {
     this.editingIngredient = -1;
-    if(element.innerText == null || element.innerText.replace(/\s/g,'') == ''){
+    if (element.innerText == null || element.innerText.replace(/\s/g, '') == '') {
       this.deleteIngredient(index, true);
       return;
     }
@@ -57,7 +58,7 @@ export class ItemPage {
   }
 
   deleteIngredient(index: number, silent?: boolean) {
-    if(silent){
+    if (silent) {
       this.selectedRecipe.ingredients.splice(index, 1);
       this.saveChanges();
       return;
@@ -97,7 +98,7 @@ export class ItemPage {
 
   editStep(index: number, element: HTMLDivElement) {
     this.editingStep = -1;
-    if(element.innerText == null || element.innerText.replace(/\s/g,'') == ''){
+    if (element.innerText == null || element.innerText.replace(/\s/g, '') == '') {
       this.deleteStep(index, true);
       return;
     }
@@ -144,7 +145,7 @@ export class ItemPage {
   }
 
   deleteStep(index: number, silent?: boolean) {
-    if(silent){
+    if (silent) {
       this.selectedRecipe.steps.splice(index, 1);
       this.selectedRecipe.timers.splice(index, 1);
       this.saveChanges();
@@ -197,6 +198,44 @@ export class ItemPage {
     this.selectedRecipe.steps = reorderArray(this.selectedRecipe.steps, event);
     this.selectedRecipe.timers = reorderArray(this.selectedRecipe.timers, event);
     this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
+  }
+
+  editEstTime(element: HTMLDivElement) {
+    let prompt = this.alertCtrl.create({
+      title: 'Edit estimated time',
+      message: "Modify the estimated time (minutes):",
+      inputs: [
+        {
+          name: 'time',
+          placeholder: 'Time (minutes)',
+          type: 'number',
+          min: 0,
+          value: this.selectedRecipe.estTime.toString()
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            console.log('Saved clicked');
+            let time = Number(data.time);
+            if (isNaN(time)) {
+              console.log('Error: Time must be a number');
+              return;
+            }
+            this.selectedRecipe.estTime = time;
+            this.saveChanges();
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 
   saveChanges(): Promise<any> {

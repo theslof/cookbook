@@ -19,6 +19,10 @@
 
 <ion-content padding>
   <div *ngIf="selectedRecipe; else noparam">
+    <button ion-button color="dark" outline float-end>
+      <ion-icon name="share"></ion-icon>
+    </button>
+    <p (click)="editEstTime()">Estimated time: {{selectedRecipe.estTime}}m</p>
     <h2>Ingredients</h2>
     <ion-list>
       <ion-item-group [reorder]="reorderIngredientsToggle.checked" (ionItemReorder)="reorderIngredients($event)">

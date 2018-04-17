@@ -3,6 +3,7 @@ import {Recipe} from "./recipes";
 export const RECIPES: Recipe[] = [
   {
     name: "Pock-marked old woman's tofu",
+    estTime: 0,
     ingredients: [
       "500g Tofu",
       "Salt",
@@ -36,6 +37,7 @@ export const RECIPES: Recipe[] = [
   },
   {
     name: "Ants climbing a tree",
+    estTime: 0,
     ingredients: [
       "120g Vermicelli noodles",
       "1 tbsp Cooking oil",
