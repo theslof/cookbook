@@ -100,6 +100,7 @@ export class RecipesProvider {
   }
 
   deleteRecipe(uuid: string) {
+    this.removeFavorite(uuid);
     this.storage.remove(uuid)
       .then(() => {
         delete this.index[uuid];
