@@ -85,11 +85,15 @@ export class ListPage {
   addRecipe() {
     let prompt = this.alertCtrl.create({
       title: 'New recipe',
-      message: "Enter a name for the recipe:",
+      message: "Enter a name for a new recipe OR enter JSON data to import:",
       inputs: [
         {
           name: 'name',
           placeholder: 'Name',
+        },
+        {
+          name: 'json',
+          placeholder: 'JSON data',
         },
       ],
       buttons: [
@@ -103,8 +107,22 @@ export class ListPage {
           text: 'Add',
           handler: data => {
             console.log('Add clicked');
-            let recipe: Recipe = RecipesProvider.emptyRecipe();
-            recipe.name = data.name;
+            if (data.name.replace(/\s/g, '') == '' && data.json.replace(/\s/g, '') == '') {
+              console.log('No data entered, aborting');
+              return;
+            }
+
+            let recipe: Recipe;
+            if (data.json != '') {
+              recipe = RecipesProvider.importRecipe(data.json);
+              if (!recipe) {
+                console.log('Couldn\'t parse JSON data, aborting');
+                return;
+              }
+            } else {
+              recipe = RecipesProvider.emptyRecipe();
+              recipe.name = data.name;
+            }
             let uuid = UUID.UUID();
             this.recipeProvider.saveRecipe(uuid, recipe)
               .then(() => this.navCtrl.push(ItemPage, {uuid: uuid}));

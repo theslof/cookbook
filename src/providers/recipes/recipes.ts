@@ -142,6 +142,39 @@ export class RecipesProvider {
     this.favoritesSubject.next({});
     return this.storage.clear();
   }
+
+  static importRecipe(json: string): Recipe{
+    let recipe = null;
+    try {
+      recipe = JSON.parse(json) as Recipe;
+    } catch (e) {
+      console.log(e);
+      recipe = null;
+    }
+
+    return recipe;
+  }
+
+  static toEmail(recipe: Recipe): string{
+    let body: string = '';
+    body += `${recipe.name}\n\n`;
+    body += `Estimated time: ${recipe.estTime}m\n\n`;
+
+    body += `-- Ingredients --\n`;
+    recipe.ingredients.forEach((value:string, index:number, array:string[]) => {
+      body += `* ${value}\n`;
+    });
+    body += `\n\n`;
+
+    body += `-- Directions --\n`;
+    recipe.steps.forEach((value:string, index:number, array:string[]) => {
+      body += `* ${value}\n`;
+    });
+    body += `\n\n`;
+
+    body += `-- JSON code begins --\n${JSON.stringify(recipe)}\n-- JSON code ends --`;
+    return body;
+  }
 }
 
 export interface RecipeIndex {

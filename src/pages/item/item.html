@@ -19,7 +19,7 @@
 
 <ion-content padding>
   <div *ngIf="selectedRecipe; else noparam">
-    <button ion-button color="dark" outline float-end>
+    <button ion-button color="dark" outline float-end (click)="shareRecipe()">
       <ion-icon name="share"></ion-icon>
     </button>
     <p (click)="editEstTime()">Estimated time: {{selectedRecipe.estTime}}m</p>

@@ -26,7 +26,7 @@ export class ItemPage {
   };
 
   constructor(public navParams: NavParams, public alertCtrl: AlertController,
-              private recipesProvider: RecipesProvider, public timerProvider: TimerProvider) {
+              private recipesProvider: RecipesProvider, public timerProvider: TimerProvider,) {
     // If we navigated to this page, we will have an item available as a nav param
     this.uuid = navParams.get('uuid');
     this.favorite = this.recipesProvider.isFavorite(this.uuid);
@@ -240,5 +240,14 @@ export class ItemPage {
 
   saveChanges(): Promise<any> {
     return this.recipesProvider.saveRecipe(this.uuid, this.selectedRecipe);
+  }
+
+  shareRecipe() {
+    let email = {
+      subject: encodeURIComponent('[Cookbook recipe] ' + this.selectedRecipe.name),
+      body: encodeURIComponent(RecipesProvider.toEmail(this.selectedRecipe)),
+    };
+
+    document.location.href = 'mailto:?subject=' + email.subject + '&body=' + email.body;
   }
 }
